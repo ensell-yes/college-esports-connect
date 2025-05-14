@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				esports: {
+					purple: '#6E59A5',
+					teal: '#0EA5E9',
+					orange: '#F97316',
+					dark: '#1A1F2C',
+					light: '#F6F6F7',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,12 +92,29 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				pulse: {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' },
+				},
+				glow: {
+					'0%, 100%': { boxShadow: '0 0 10px rgba(110, 89, 165, 0.7)' },
+					'50%': { boxShadow: '0 0 20px rgba(110, 89, 165, 0.9)' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'glow': 'glow 2s ease-in-out infinite'
+			},
+			backgroundImage: {
+				'hero-pattern': 'linear-gradient(to right bottom, rgba(110, 89, 165, 0.8), rgba(14, 165, 233, 0.8))',
+				'grid-pattern': 'radial-gradient(rgba(110, 89, 165, 0.4) 1px, transparent 1px)',
+			},
+			fontFamily: {
+				gaming: ['Orbitron', 'sans-serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
