@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu, X, Gamepad } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,11 @@ const Navbar = () => {
     <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <Gamepad className="h-8 w-8 text-esports-purple" />
+          <img 
+            src="/lovable-uploads/2f9b689f-846e-42a1-ae08-1492659992f8.png" 
+            alt="EsportsRecruit Logo" 
+            className="h-10 w-auto"
+          />
           <span className="font-gaming text-xl font-bold text-esports-dark">EsportsRecruit</span>
         </Link>
 
