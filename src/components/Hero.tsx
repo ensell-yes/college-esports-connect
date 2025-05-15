@@ -1,10 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Trophy } from "lucide-react";
-
 const Hero = () => {
-  return (
-    <div className="relative pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-esports-purple/10 to-esports-teal/10">
+  return <div className="relative pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-esports-purple/10 to-esports-teal/10">
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-grid-pattern grid-background opacity-30"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
@@ -21,9 +18,7 @@ const Hero = () => {
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl">
-              Connect student gamers with college coaches and programs. Showcase your skills, discover opportunities, and make your mark in collegiate esports.
-            </p>
+            <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl">Connect high school and community college gamers with coaches and four-year college programs. Showcase your skills, discover opportunities, and make your mark in collegiate esports.</p>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-esports-purple hover:bg-esports-purple/90 text-white px-8 py-6">
@@ -50,11 +45,7 @@ const Hero = () => {
           
           <div className="flex-1 relative">
             <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 relative z-10 animate-glow">
-              <img 
-                src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                alt="Esports team playing" 
-                className="w-full h-64 object-cover object-center" 
-              />
+              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Esports team playing" className="w-full h-64 object-cover object-center" />
               <div className="p-6">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-3">
@@ -101,8 +92,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Hero;
