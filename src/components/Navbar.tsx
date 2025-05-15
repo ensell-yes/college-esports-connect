@@ -1,26 +1,17 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  return (
-    <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+  return <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <img 
-            src="/lovable-uploads/2f9b689f-846e-42a1-ae08-1492659992f8.png" 
-            alt="EsportsRecruit Logo" 
-            className="h-10 w-auto"
-          />
-          <span className="font-gaming text-xl font-bold text-esports-dark">EsportsRecruit</span>
+          <img src="/lovable-uploads/2f9b689f-846e-42a1-ae08-1492659992f8.png" alt="EsportsRecruit Logo" className="h-10 w-auto" />
+          <span className="font-gaming text-xl font-bold text-esports-dark px-[10px]">College Recruiting</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -41,42 +32,22 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden p-2"
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6 text-esports-dark" />
-          ) : (
-            <Menu className="h-6 w-6 text-esports-dark" />
-          )}
+        <button className="md:hidden p-2" onClick={toggleMenu}>
+          {isMenuOpen ? <X className="h-6 w-6 text-esports-dark" /> : <Menu className="h-6 w-6 text-esports-dark" />}
         </button>
       </div>
 
       {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t">
+      {isMenuOpen && <div className="md:hidden bg-white border-t">
           <div className="container mx-auto px-4 py-4">
             <nav className="flex flex-col gap-4">
-              <Link 
-                to="/" 
-                className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2"
-                onClick={toggleMenu}
-              >
+              <Link to="/" className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2" onClick={toggleMenu}>
                 Home
               </Link>
-              <Link 
-                to="#features" 
-                className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2"
-                onClick={toggleMenu}
-              >
+              <Link to="#features" className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2" onClick={toggleMenu}>
                 Features
               </Link>
-              <Link 
-                to="#how-it-works" 
-                className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2"
-                onClick={toggleMenu}
-              >
+              <Link to="#how-it-works" className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2" onClick={toggleMenu}>
                 How It Works
               </Link>
               <div className="flex flex-col gap-3 py-2">
@@ -85,10 +56,7 @@ const Navbar = () => {
               </div>
             </nav>
           </div>
-        </div>
-      )}
-    </header>
-  );
+        </div>}
+    </header>;
 };
-
 export default Navbar;
