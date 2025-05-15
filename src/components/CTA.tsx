@@ -1,10 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Gamepad } from "lucide-react";
-
 const CTA = () => {
-  return (
-    <section className="py-20 relative overflow-hidden">
+  return <section className="py-20 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-br from-esports-purple/90 to-esports-teal/90 clip-path-slant"></div>
       
       <div className="container mx-auto px-4 relative z-10">
@@ -22,7 +19,7 @@ const CTA = () => {
                 Get Started Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6">
+              <Button size="lg" variant="outline" className="border-white px-8 py-6 text-esports-purple bg-white">
                 Request Demo
               </Button>
             </div>
@@ -75,8 +72,6 @@ const CTA = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CTA;
