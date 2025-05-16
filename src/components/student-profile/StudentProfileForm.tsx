@@ -20,6 +20,7 @@ import { studentProfileSchema, StudentProfileFormValues } from "./schema";
 import GamerInfoFields from "./GamerInfoFields";
 import PersonalInfoFields from "./PersonalInfoFields";
 import AddressFields from "./AddressFields";
+import { parse } from "date-fns";
 
 interface StudentProfileFormProps {
   onSubmit?: () => void;
@@ -29,31 +30,78 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  // Define default values for autofill
+  const defaultValues: StudentProfileFormValues = {
+    gamertag: "",
+    prefix: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "us",
+    dateOfBirth: new Date(),
+  };
+
   // Define form
   const form = useForm<StudentProfileFormValues>({
     resolver: zodResolver(studentProfileSchema),
-    defaultValues: {
-      gamertag: "",
-      prefix: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "us",
-    },
+    defaultValues,
   });
+
+  // Function to check if form is empty
+  const isFormEmpty = (values: StudentProfileFormValues): boolean => {
+    return (
+      !values.gamertag &&
+      !values.firstName &&
+      !values.lastName &&
+      !values.email &&
+      !values.phone &&
+      !values.addressLine1 &&
+      !values.city &&
+      !values.state
+    );
+  };
+
+  // Function to autofill form with default data
+  const autofillForm = () => {
+    const defaultData: StudentProfileFormValues = {
+      gamertag: "DadJoke",
+      prefix: "[Yes]",
+      firstName: "Ensell",
+      lastName: "Lee",
+      email: "ensell.lee@hardknocks.edu",
+      phone: "415-828-8228",
+      addressLine1: "274 Redwood Shores Pkwy",
+      addressLine2: "Suite 618",
+      city: "Redwood City",
+      state: "CA",
+      zipCode: "94065",
+      country: "us",
+      dateOfBirth: parse("01/01/2000", "MM/dd/yyyy", new Date()),
+    };
+
+    // Update form values
+    Object.entries(defaultData).forEach(([key, value]) => {
+      form.setValue(key as keyof StudentProfileFormValues, value);
+    });
+
+    return defaultData;
+  };
 
   // Handle form submission
   const handleSubmit = async (values: StudentProfileFormValues) => {
     setIsSubmitting(true);
     try {
+      // If form is empty, autofill with default data
+      const finalValues = isFormEmpty(values) ? autofillForm() : values;
+      
       // In a real app, you would send this data to your backend
-      console.log("Student profile data:", values);
+      console.log("Student profile data:", finalValues);
       
       toast.success("Profile information saved!");
       
