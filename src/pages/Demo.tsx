@@ -60,7 +60,7 @@ const Demo = () => {
     },
   });
 
-  // Role selection form
+  // Role selection form - Create a separate form instance
   const roleForm = useForm<RoleFormValues>({
     resolver: zodResolver(roleSchema),
     defaultValues: {
