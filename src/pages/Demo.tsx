@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordForm from "@/components/demo/PasswordForm";
 import RoleSelectionForm from "@/components/demo/RoleSelectionForm";
-import StudentProfileForm from "@/components/StudentProfileForm";
+import { StudentProfileForm } from "@/components";
 
 const Demo = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
