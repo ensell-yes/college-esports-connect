@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/sonner";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -25,6 +27,7 @@ interface StudentProfileFormProps {
 
 const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // Define form
   const form = useForm<StudentProfileFormValues>({
@@ -68,14 +71,32 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
     }
   };
 
+  // Handle going back
+  const handleGoBack = () => {
+    navigate(-1); // Navigate back to previous page
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-2xl">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Student Profile</CardTitle>
-          <CardDescription className="text-center">
-            Please provide your gaming and personal information
-          </CardDescription>
+          <div className="flex items-center mb-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleGoBack} 
+              className="mr-2"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex-1">
+              <CardTitle className="text-2xl font-bold text-center">Student Profile</CardTitle>
+              <CardDescription className="text-center">
+                Please provide your gaming and personal information
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <Form {...form}>
