@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/sonner";
@@ -8,6 +7,7 @@ import {
   MessageSquare, // Using MessageSquare instead of Discord
   Gamepad, // Using Gamepad for gaming controllers
   Gamepad2, // Using Gamepad2 as an alternative gaming icon
+  ArrowLeft, // Added for the back button
 } from "lucide-react";
 
 import { 
@@ -70,14 +70,31 @@ const ConnectedAccountsForm = () => {
     navigate("/");
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // Navigate back to previous page
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-2xl">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Connected Gaming Accounts</CardTitle>
-          <CardDescription className="text-center">
-            Connect your gaming profiles to enhance your experience
-          </CardDescription>
+          <div className="flex items-center mb-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleGoBack} 
+              className="mr-2"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex-1">
+              <CardTitle className="text-2xl font-bold text-center">Connected Gaming Accounts</CardTitle>
+              <CardDescription className="text-center">
+                Connect your gaming profiles to enhance your experience
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
