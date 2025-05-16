@@ -35,7 +35,7 @@ export const DateOfBirthField = ({ form }: DateOfBirthFieldProps) => {
           <FormControl>
             <Input 
               placeholder="MM/DD/YYYY" 
-              value={field.value ? field.value.toLocaleDateString('en-US') : ""}
+              value={field.value instanceof Date ? field.value.toLocaleDateString('en-US') : ""}
               onChange={handleDateInput}
             />
           </FormControl>

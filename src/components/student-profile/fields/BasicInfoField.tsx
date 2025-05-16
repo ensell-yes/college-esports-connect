@@ -23,15 +23,27 @@ export const BasicInfoField = ({
     <FormField
       control={form.control}
       name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label} *</FormLabel>
-          <FormControl>
-            <Input type={type} placeholder={placeholder} {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
+      render={({ field }) => {
+        // Convert Date objects to string for input field
+        const fieldValue = field.value instanceof Date 
+          ? field.value.toLocaleDateString('en-US')
+          : field.value as string;
+
+        return (
+          <FormItem>
+            <FormLabel>{label} *</FormLabel>
+            <FormControl>
+              <Input 
+                type={type} 
+                placeholder={placeholder} 
+                {...field}
+                value={fieldValue} 
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        );
+      }}
     />
   );
 };
