@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/sonner";
@@ -20,8 +19,11 @@ import GamerInfoFields from "./GamerInfoFields";
 import PersonalInfoFields from "./PersonalInfoFields";
 import AddressFields from "./AddressFields";
 
-const StudentProfileForm = () => {
-  const navigate = useNavigate();
+interface StudentProfileFormProps {
+  onSubmit?: () => void;
+}
+
+const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Define form
@@ -44,7 +46,7 @@ const StudentProfileForm = () => {
   });
 
   // Handle form submission
-  const onSubmit = async (values: StudentProfileFormValues) => {
+  const handleSubmit = async (values: StudentProfileFormValues) => {
     setIsSubmitting(true);
     try {
       // In a real app, you would send this data to your backend
@@ -52,10 +54,12 @@ const StudentProfileForm = () => {
       
       toast.success("Profile information saved!");
       
-      // Redirect to home page after successful submission
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      // Call onSubmit callback if provided
+      if (onSubmit) {
+        setTimeout(() => {
+          onSubmit();
+        }, 1000);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("There was an error saving your profile. Please try again.");
@@ -75,7 +79,7 @@ const StudentProfileForm = () => {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
               {/* Gamer Info Section */}
               <GamerInfoFields form={form} />
               
