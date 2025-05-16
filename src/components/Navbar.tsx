@@ -1,12 +1,16 @@
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { AuthNavItems } from "./AuthNavItems";
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  
   return <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
@@ -26,8 +30,7 @@ const Navbar = () => {
             How It Works
           </Link>
           <div className="flex items-center gap-3 ml-4">
-            <Button variant="outline">Sign In</Button>
-            <Button className="bg-esports-purple hover:bg-esports-purple/80">Register</Button>
+            <AuthNavItems />
           </div>
         </nav>
 
@@ -51,12 +54,17 @@ const Navbar = () => {
                 How It Works
               </Link>
               <div className="flex flex-col gap-3 py-2">
-                <Button variant="outline" className="w-full">Sign In</Button>
-                <Button className="w-full bg-esports-purple hover:bg-esports-purple/80">Register</Button>
+                <Link to="/auth" onClick={toggleMenu}>
+                  <Button variant="outline" className="w-full">Sign In</Button>
+                </Link>
+                <Link to="/auth" onClick={toggleMenu}>
+                  <Button className="w-full bg-esports-purple hover:bg-esports-purple/80">Register</Button>
+                </Link>
               </div>
             </nav>
           </div>
         </div>}
     </header>;
 };
+
 export default Navbar;
