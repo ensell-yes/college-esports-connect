@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/sonner";
 import { 
   Twitch, 
-  Twitter, 
-  Discord, 
-  Xbox, 
-  Steam, 
-  Gamepad 
+  Twitter,
+  MessageSquare, // Using MessageSquare instead of Discord
+  GameController, // Using GameController instead of Xbox
+  Gamepad, // Using Gamepad instead of Steam for consistent styling
 } from "lucide-react";
 
 import { 
@@ -35,9 +34,9 @@ const ConnectedAccountsForm = () => {
   const [accounts, setAccounts] = useState<ServiceAccount[]>([
     { id: "twitch", name: "Twitch", icon: Twitch, connected: false },
     { id: "twitter", name: "Twitter / X", icon: Twitter, connected: false },
-    { id: "discord", name: "Discord", icon: Discord, connected: false },
-    { id: "xbox", name: "Xbox", icon: Xbox, connected: false },
-    { id: "steam", name: "Steam", icon: Steam, connected: false },
+    { id: "discord", name: "Discord", icon: MessageSquare, connected: false },
+    { id: "xbox", name: "Xbox", icon: GameController, connected: false },
+    { id: "steam", name: "Steam", icon: Gamepad, connected: false },
     { id: "epic", name: "Epic Games", icon: Gamepad, connected: false },
     { id: "battle", name: "Battle.net", icon: Gamepad, connected: false },
   ]);
