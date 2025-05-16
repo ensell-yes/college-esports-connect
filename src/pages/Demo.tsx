@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import StudentProfileForm from "@/components/StudentProfileForm";
 
 // Password validation schema
 const passwordSchema = z.object({
@@ -82,11 +83,14 @@ const Demo = () => {
   const handleRoleSubmit = (values: RoleFormValues) => {
     setSelectedRole(values.role);
     toast.success(`You selected: ${values.role}`);
-    // In a real app, you would store this in a user profile
-    // For now we'll just redirect to the index page
-    setTimeout(() => {
-      navigate("/");
-    }, 1500);
+    
+    // We'll only redirect non-student users to the home page
+    // Students will proceed to the profile form
+    if (values.role !== "student") {
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    }
   };
 
   // Password screen
@@ -183,6 +187,11 @@ const Demo = () => {
         </Card>
       </div>
     );
+  }
+
+  // If student role is selected, show the student profile form
+  if (selectedRole === "student") {
+    return <StudentProfileForm />;
   }
 
   // This should never happen, but just in case
