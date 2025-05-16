@@ -6,8 +6,8 @@ import {
   Twitch, 
   Twitter,
   MessageSquare, // Using MessageSquare instead of Discord
-  GameController, // Using GameController instead of Xbox
-  Gamepad, // Using Gamepad instead of Steam for consistent styling
+  Gamepad, // Using Gamepad for gaming controllers
+  Gamepad2, // Using Gamepad2 as an alternative gaming icon
 } from "lucide-react";
 
 import { 
@@ -35,10 +35,10 @@ const ConnectedAccountsForm = () => {
     { id: "twitch", name: "Twitch", icon: Twitch, connected: false },
     { id: "twitter", name: "Twitter / X", icon: Twitter, connected: false },
     { id: "discord", name: "Discord", icon: MessageSquare, connected: false },
-    { id: "xbox", name: "Xbox", icon: GameController, connected: false },
-    { id: "steam", name: "Steam", icon: Gamepad, connected: false },
+    { id: "xbox", name: "Xbox", icon: Gamepad, connected: false },
+    { id: "steam", name: "Steam", icon: Gamepad2, connected: false },
     { id: "epic", name: "Epic Games", icon: Gamepad, connected: false },
-    { id: "battle", name: "Battle.net", icon: Gamepad, connected: false },
+    { id: "battle", name: "Battle.net", icon: Gamepad2, connected: false },
   ]);
 
   const handleConnect = (id: string) => {
