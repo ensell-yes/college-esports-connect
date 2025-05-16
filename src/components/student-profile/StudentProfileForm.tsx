@@ -90,7 +90,7 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
       form.setValue(key as keyof StudentProfileFormValues, value);
     });
 
-    return defaultData;
+    toast.info("Form has been filled with default information");
   };
 
   // Handle form submission
@@ -98,10 +98,14 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
     setIsSubmitting(true);
     try {
       // If form is empty, autofill with default data
-      const finalValues = isFormEmpty(values) ? autofillForm() : values;
+      if (isFormEmpty(values)) {
+        autofillForm();
+        setIsSubmitting(false);
+        return; // Stop the submission process to let user see the autofilled data
+      }
       
       // In a real app, you would send this data to your backend
-      console.log("Student profile data:", finalValues);
+      console.log("Student profile data:", values);
       
       toast.success("Profile information saved!");
       
