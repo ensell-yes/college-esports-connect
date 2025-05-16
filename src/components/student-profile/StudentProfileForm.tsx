@@ -90,7 +90,7 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
       form.setValue(key as keyof StudentProfileFormValues, value);
     });
 
-    toast.info("Form has been filled with default information");
+    toast.info("Form has been filled with demo information");
   };
 
   // Handle form submission
@@ -148,6 +148,16 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
                 Please provide your gaming and personal information
               </CardDescription>
             </div>
+          </div>
+          <div className="mt-4 flex justify-center">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={autofillForm}
+              className="bg-esports-purple/10 hover:bg-esports-purple/20 border-esports-purple/30 text-esports-purple"
+            >
+              Demo: Fill in Data
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
