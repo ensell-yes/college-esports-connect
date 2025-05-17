@@ -56,7 +56,7 @@ const Demo = () => {
       )}
       
       {currentStep === "role" && (
-        <RoleSelectionForm onRoleSelect={handleRoleSelection} />
+        <RoleSelectionForm onRoleSelected={handleRoleSelection} />
       )}
       
       {currentStep === "profile" && role && (
@@ -68,7 +68,6 @@ const Demo = () => {
       
       {currentStep === "connected-accounts" && (
         <ConnectedAccountsForm 
-          onSubmit={handleConnectedAccountsCompletion}
           onBack={handleConnectedAccountsBack}
         />
       )}
