@@ -16,8 +16,75 @@ interface ConnectedAccountsFormProps {
   onBack?: () => void;
 }
 
+interface ServiceItem {
+  name: string;
+  color: string;
+  initial: string;
+  description: string;
+}
+
 const ConnectedAccountsForm = ({ onBack }: ConnectedAccountsFormProps) => {
   const navigate = useNavigate();
+  
+  const services: ServiceItem[] = [
+    {
+      name: "Discord",
+      color: "bg-blue-500",
+      initial: "D",
+      description: "Connect your Discord account"
+    },
+    {
+      name: "Epic Games",
+      color: "bg-black",
+      initial: "E",
+      description: "Connect your Epic Games account"
+    },
+    {
+      name: "League of Legends",
+      color: "bg-blue-600",
+      initial: "L",
+      description: "Connect your League of Legends account"
+    },
+    {
+      name: "Playstation Network",
+      color: "bg-blue-800",
+      initial: "P",
+      description: "Connect your Playstation account"
+    },
+    {
+      name: "Riot Games",
+      color: "bg-red-600",
+      initial: "R",
+      description: "Connect your Riot Games account"
+    },
+    {
+      name: "Steam",
+      color: "bg-gray-800",
+      initial: "S",
+      description: "Connect your Steam account"
+    },
+    {
+      name: "Twitch",
+      color: "bg-purple-500",
+      initial: "T",
+      description: "Connect your Twitch account"
+    },
+    {
+      name: "Xbox Game Pass",
+      color: "bg-green-500",
+      initial: "X",
+      description: "Connect your Xbox account"
+    },
+    {
+      name: "YouTube",
+      color: "bg-red-500",
+      initial: "Y",
+      description: "Connect your YouTube account"
+    }
+  ];
+  
+  // Sort services alphabetically by name
+  const sortedServices = [...services].sort((a, b) => a.name.localeCompare(b.name));
   
   const handleGoBack = () => {
     if (onBack) {
@@ -51,38 +118,20 @@ const ConnectedAccountsForm = ({ onBack }: ConnectedAccountsFormProps) => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
-            <div className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">D</div>
-                <div>
-                  <h3 className="font-medium">Discord</h3>
-                  <p className="text-sm text-muted-foreground">Connect your Discord account</p>
+            {sortedServices.map((service) => (
+              <div key={service.name} className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 ${service.color} rounded-full flex items-center justify-center text-white font-bold`}>
+                    {service.initial}
+                  </div>
+                  <div>
+                    <h3 className="font-medium">{service.name}</h3>
+                    <p className="text-sm text-muted-foreground">{service.description}</p>
+                  </div>
                 </div>
+                <Button variant="outline">Connect</Button>
               </div>
-              <Button variant="outline">Connect</Button>
-            </div>
-
-            <div className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">X</div>
-                <div>
-                  <h3 className="font-medium">Xbox Game Pass</h3>
-                  <p className="text-sm text-muted-foreground">Connect your Xbox account</p>
-                </div>
-              </div>
-              <Button variant="outline">Connect</Button>
-            </div>
-
-            <div className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">T</div>
-                <div>
-                  <h3 className="font-medium">Twitch</h3>
-                  <p className="text-sm text-muted-foreground">Connect your Twitch account</p>
-                </div>
-              </div>
-              <Button variant="outline">Connect</Button>
-            </div>
+            ))}
           </div>
         </CardContent>
         <CardFooter>
