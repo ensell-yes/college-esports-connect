@@ -1,74 +1,79 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import PasswordForm from "@/components/demo/PasswordForm";
 import RoleSelectionForm from "@/components/demo/RoleSelectionForm";
-import { StudentProfileForm, ConnectedAccountsForm } from "@/components";
+import StudentProfileForm from "@/components/student-profile/StudentProfileForm";
+import ConnectedAccountsForm from "@/components/connected-accounts/ConnectedAccountsForm";
+
+type Role = "student" | "coach" | null;
+type Step = "password" | "role" | "profile" | "connected-accounts";
 
 const Demo = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
-  const [profileSubmitted, setProfileSubmitted] = useState(false);
+  const { hasDemoAccess } = useAuth();
   const navigate = useNavigate();
-
-  // Handle successful authentication
-  const handleAuthSuccess = () => {
-    setIsAuthenticated(true);
-  };
-
-  // Handle role selection
-  const handleRoleSelected = (role: string) => {
-    setSelectedRole(role);
-    
-    // We'll only redirect non-student users to the home page
-    // Students will proceed to the profile form
-    if (role !== "student") {
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+  const [role, setRole] = useState<Role>(null);
+  const [currentStep, setCurrentStep] = useState<Step>("password");
+  
+  // Check for existing demo access on component mount
+  useEffect(() => {
+    // Skip password step if user has valid demo access
+    if (hasDemoAccess() && currentStep === "password") {
+      setCurrentStep("role");
     }
+  }, []);
+
+  const handlePasswordSuccess = () => {
+    setCurrentStep("role");
   };
 
-  // Handle profile submission
-  const handleProfileSubmitted = () => {
-    setProfileSubmitted(true);
+  const handleRoleSelection = (selectedRole: Role) => {
+    setRole(selectedRole);
+    setCurrentStep("profile");
   };
 
-  // Handle going back from profile to role selection
-  const handleBackToRoleSelection = () => {
-    setSelectedRole(null);
+  const handleProfileCompletion = () => {
+    setCurrentStep("connected-accounts");
   };
 
-  // Handle going back from connected accounts to profile
-  const handleBackToProfile = () => {
-    setProfileSubmitted(false);
+  const handleProfileBack = () => {
+    setCurrentStep("role");
   };
 
-  // Password screen
-  if (!isAuthenticated) {
-    return <PasswordForm onSuccess={handleAuthSuccess} />;
-  }
+  const handleConnectedAccountsBack = () => {
+    setCurrentStep("profile");
+  };
 
-  // Role selection screen
-  if (isAuthenticated && !selectedRole) {
-    return <RoleSelectionForm onRoleSelected={handleRoleSelected} />;
-  }
+  const handleConnectedAccountsCompletion = () => {
+    navigate("/");
+  };
 
-  // If student role is selected, show the student profile form
-  if (selectedRole === "student" && !profileSubmitted) {
-    return <StudentProfileForm 
-      onSubmit={handleProfileSubmitted} 
-      onBack={handleBackToRoleSelection}
-    />;
-  }
-
-  // After profile submission, show the connected accounts form
-  if (selectedRole === "student" && profileSubmitted) {
-    return <ConnectedAccountsForm onBack={handleBackToProfile} />;
-  }
-
-  // This should never happen, but just in case
-  return <div>Loading...</div>;
+  return (
+    <div className="min-h-screen bg-background">
+      {currentStep === "password" && (
+        <PasswordForm onSuccess={handlePasswordSuccess} />
+      )}
+      
+      {currentStep === "role" && (
+        <RoleSelectionForm onRoleSelect={handleRoleSelection} />
+      )}
+      
+      {currentStep === "profile" && role && (
+        <StudentProfileForm 
+          onSubmit={handleProfileCompletion} 
+          onBack={handleProfileBack}
+        />
+      )}
+      
+      {currentStep === "connected-accounts" && (
+        <ConnectedAccountsForm 
+          onSubmit={handleConnectedAccountsCompletion}
+          onBack={handleConnectedAccountsBack}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Demo;

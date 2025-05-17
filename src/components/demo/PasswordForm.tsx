@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock } from "lucide-react";
 import { toast } from "@/components/ui/sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +37,9 @@ interface PasswordFormProps {
 }
 
 const PasswordForm = ({ onSuccess }: PasswordFormProps) => {
+  // Use the auth context to get access to demo access functions
+  const { setDemoAccess } = useAuth();
+  
   // Password form
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
@@ -47,6 +51,8 @@ const PasswordForm = ({ onSuccess }: PasswordFormProps) => {
   // Handle password submission
   const handlePasswordSubmit = (values: PasswordFormValues) => {
     if (values.password === "Path2College") {
+      // Set demo access with JWT (expires in 2 hours)
+      setDemoAccess(true);
       onSuccess();
       toast.success("Access granted!");
     } else {
