@@ -34,6 +34,16 @@ const Demo = () => {
     setProfileSubmitted(true);
   };
 
+  // Handle going back from profile to role selection
+  const handleBackToRoleSelection = () => {
+    setSelectedRole(null);
+  };
+
+  // Handle going back from connected accounts to profile
+  const handleBackToProfile = () => {
+    setProfileSubmitted(false);
+  };
+
   // Password screen
   if (!isAuthenticated) {
     return <PasswordForm onSuccess={handleAuthSuccess} />;
@@ -46,12 +56,15 @@ const Demo = () => {
 
   // If student role is selected, show the student profile form
   if (selectedRole === "student" && !profileSubmitted) {
-    return <StudentProfileForm onSubmit={handleProfileSubmitted} />;
+    return <StudentProfileForm 
+      onSubmit={handleProfileSubmitted} 
+      onBack={handleBackToRoleSelection}
+    />;
   }
 
   // After profile submission, show the connected accounts form
   if (selectedRole === "student" && profileSubmitted) {
-    return <ConnectedAccountsForm />;
+    return <ConnectedAccountsForm onBack={handleBackToProfile} />;
   }
 
   // This should never happen, but just in case

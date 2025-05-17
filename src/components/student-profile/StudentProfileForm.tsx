@@ -24,9 +24,10 @@ import { parse } from "date-fns";
 
 interface StudentProfileFormProps {
   onSubmit?: () => void;
+  onBack?: () => void;
 }
 
-const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
+const StudentProfileForm = ({ onSubmit, onBack }: StudentProfileFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
@@ -125,7 +126,11 @@ const StudentProfileForm = ({ onSubmit }: StudentProfileFormProps) => {
 
   // Handle going back
   const handleGoBack = () => {
-    navigate(-1); // Navigate back to previous page
+    if (onBack) {
+      onBack();
+    } else {
+      navigate(-1); // Navigate back to previous page as fallback
+    }
   };
 
   return (
