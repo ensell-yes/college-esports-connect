@@ -1,77 +1,30 @@
-import { useState } from "react";
+
+import React from "react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "@/components/ui/sonner";
-import { 
-  Twitch, 
-  Twitter,
-  MessageSquare, // Using MessageSquare instead of Discord
-  Gamepad, // Using Gamepad for gaming controllers
-  Gamepad2, // Using Gamepad2 as an alternative gaming icon
-  ArrowLeft, // Added for the back button
-} from "lucide-react";
-
-import { 
-  Card, 
-  CardHeader, 
-  CardContent, 
-  CardTitle, 
-  CardDescription 
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-type ServiceAccount = {
-  id: string;
-  name: string;
-  icon: React.ElementType;
-  connected: boolean;
-  username?: string;
-};
+interface ConnectedAccountsFormProps {
+  onBack?: () => void;
+}
 
-const ConnectedAccountsForm = () => {
+const ConnectedAccountsForm = ({ onBack }: ConnectedAccountsFormProps) => {
   const navigate = useNavigate();
-  const [accounts, setAccounts] = useState<ServiceAccount[]>([
-    { id: "twitch", name: "Twitch", icon: Twitch, connected: false },
-    { id: "twitter", name: "Twitter / X", icon: Twitter, connected: false },
-    { id: "discord", name: "Discord", icon: MessageSquare, connected: false },
-    { id: "xbox", name: "Xbox", icon: Gamepad, connected: false },
-    { id: "steam", name: "Steam", icon: Gamepad2, connected: false },
-    { id: "epic", name: "Epic Games", icon: Gamepad, connected: false },
-    { id: "battle", name: "Battle.net", icon: Gamepad2, connected: false },
-  ]);
-
-  const handleConnect = (id: string) => {
-    // In a real app, this would open an OAuth flow
-    setAccounts(
-      accounts.map((account) =>
-        account.id === id
-          ? { ...account, connected: true, username: `user_${id}` }
-          : account
-      )
-    );
-    toast.success(`Connected to ${id} successfully!`);
-  };
-
-  const handleDisconnect = (id: string) => {
-    // In a real app, this would revoke access tokens
-    setAccounts(
-      accounts.map((account) =>
-        account.id === id
-          ? { ...account, connected: false, username: undefined }
-          : account
-      )
-    );
-    toast.success(`Disconnected from ${id}`);
-  };
-
-  const handleFinish = () => {
-    // Navigate to home page after completion
-    navigate("/");
-  };
-
+  
   const handleGoBack = () => {
-    navigate(-1); // Navigate back to previous page
+    if (onBack) {
+      onBack();
+    } else {
+      navigate(-1); // Navigate back to previous page as fallback
+    }
   };
 
   return (
@@ -89,76 +42,57 @@ const ConnectedAccountsForm = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1">
-              <CardTitle className="text-2xl font-bold text-center">Connected Gaming Accounts</CardTitle>
+              <CardTitle className="text-2xl font-bold text-center">Connected Accounts</CardTitle>
               <CardDescription className="text-center">
-                Connect your gaming profiles to enhance your experience
+                Connect your gaming accounts to your profile
               </CardDescription>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            {accounts.map((account) => (
-              <div key={account.id} className="flex items-center justify-between p-4 rounded-lg border">
-                <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-muted rounded-md">
-                    <account.icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">{account.name}</h3>
-                    {account.connected && (
-                      <p className="text-sm text-muted-foreground">
-                        Connected as {account.username}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id={`switch-${account.id}`}
-                      checked={account.connected}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          handleConnect(account.id);
-                        } else {
-                          handleDisconnect(account.id);
-                        }
-                      }}
-                    />
-                    <Label htmlFor={`switch-${account.id}`}>
-                      {account.connected ? "Connected" : "Disconnected"}
-                    </Label>
-                  </div>
-                  {!account.connected ? (
-                    <Button
-                      onClick={() => handleConnect(account.id)}
-                      variant="outline"
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => handleDisconnect(account.id)}
-                      variant="outline"
-                      size="sm"
-                    >
-                      Disconnect
-                    </Button>
-                  )}
+          <div className="flex flex-col gap-4">
+            <div className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">D</div>
+                <div>
+                  <h3 className="font-medium">Discord</h3>
+                  <p className="text-sm text-muted-foreground">Connect your Discord account</p>
                 </div>
               </div>
-            ))}
+              <Button variant="outline">Connect</Button>
+            </div>
 
-            <Button 
-              onClick={handleFinish} 
-              className="w-full bg-esports-purple hover:bg-esports-purple/80 mt-6"
-            >
-              Finish Setup
-            </Button>
+            <div className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">X</div>
+                <div>
+                  <h3 className="font-medium">Xbox Game Pass</h3>
+                  <p className="text-sm text-muted-foreground">Connect your Xbox account</p>
+                </div>
+              </div>
+              <Button variant="outline">Connect</Button>
+            </div>
+
+            <div className="p-4 border rounded-lg flex items-center justify-between bg-muted/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">T</div>
+                <div>
+                  <h3 className="font-medium">Twitch</h3>
+                  <p className="text-sm text-muted-foreground">Connect your Twitch account</p>
+                </div>
+              </div>
+              <Button variant="outline">Connect</Button>
+            </div>
           </div>
         </CardContent>
+        <CardFooter>
+          <Button 
+            className="w-full bg-esports-purple hover:bg-esports-purple/80"
+            onClick={() => navigate("/")}
+          >
+            Complete Setup
+          </Button>
+        </CardFooter>
       </Card>
     </div>
   );
