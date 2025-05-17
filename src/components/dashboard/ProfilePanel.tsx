@@ -29,7 +29,7 @@ const ProfilePanel = () => {
     city: "Redwood City",
     state: "CA",
     followers: 2195,
-    profileImage: "/lovable-uploads/9e981126-05f0-4341-b2a0-d6e95259b11a.png",
+    profileImage: "/lovable-uploads/58566401-146a-4e8b-81cd-0b39e696f1b6.png",
     coverImage: "https://source.unsplash.com/random/1200x400/?gaming,sunset",
     showLocation: true
   });
