@@ -137,7 +137,7 @@ const ConnectedAccountsForm = ({ onBack }: ConnectedAccountsFormProps) => {
         <CardFooter>
           <Button 
             className="w-full bg-esports-purple hover:bg-esports-purple/80"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
           >
             Complete Setup
           </Button>
