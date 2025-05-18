@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -30,7 +31,7 @@ const ProfilePanel = () => {
     state: "CA",
     followers: 2195,
     profileImage: "/lovable-uploads/58566401-146a-4e8b-81cd-0b39e696f1b6.png",
-    coverImage: "https://source.unsplash.com/random/1200x400/?gaming,sunset",
+    coverImage: "/lovable-uploads/1ddc042c-abb8-49e8-89b5-44238316961e.png",
     showLocation: true
   });
 
@@ -102,7 +103,11 @@ const ProfilePanel = () => {
   return <Card className="col-span-1 shadow-md overflow-hidden">
       {/* Cover Image */}
       <div className="relative h-40 overflow-hidden">
-        <img src={profile.coverImage} alt="Cover" className="w-full h-full object-cover" />
+        <img 
+          src={profile.coverImage} 
+          alt="Cover" 
+          className="w-full h-full object-cover object-center" 
+        />
         <button className="absolute top-2 right-2 bg-white/80 p-1 rounded-full shadow hover:bg-white">
           <Pencil size={16} className="text-gray-700" />
         </button>
