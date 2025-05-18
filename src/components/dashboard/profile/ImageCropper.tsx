@@ -59,8 +59,8 @@ const ImageCropper = ({
     
     ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
     
-    // Draw semi-transparent overlay for the area outside crop
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    // Draw semi-transparent overlay for the area outside crop (80% opacity)
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     // Calculate crop rectangle in pixels
@@ -71,6 +71,10 @@ const ImageCropper = ({
     
     // Clear the crop area (make it transparent)
     ctx.clearRect(cropX, cropY, cropWidth, cropHeight);
+    
+    // Add a semi-transparent overlay inside the crop area (30% opacity)
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.fillRect(cropX, cropY, cropWidth, cropHeight);
     
     // Draw border around crop area
     ctx.strokeStyle = 'white';
@@ -278,3 +282,4 @@ const ImageCropper = ({
 };
 
 export default ImageCropper;
+
