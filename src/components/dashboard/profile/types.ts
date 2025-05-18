@@ -25,3 +25,11 @@ export interface ProfileData {
   coverImage: string;
   showLocation: boolean;
 }
+
+// Image crop area interface
+export interface CropArea {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}

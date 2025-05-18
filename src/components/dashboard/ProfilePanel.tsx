@@ -50,7 +50,7 @@ const ProfilePanel = () => {
 
   return (
     <Card className="col-span-1 shadow-md overflow-hidden">
-      <ProfileHeader profile={profile} />
+      <ProfileHeader profile={profile} onProfileUpdate={handleProfileUpdate} />
       
       <CardContent className="pt-2">
         <UserInfo profile={profile} onProfileUpdate={handleProfileUpdate} />
