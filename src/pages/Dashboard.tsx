@@ -28,8 +28,12 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 pt-20 pb-10">
         <h1 className="text-2xl font-bold text-esports-dark mb-6 mt-6">Esports Dashboard</h1>
         <DashboardLayout>
-          <ProfilePanel />
-          <StatsPanel />
+          <div className="col-span-1 sm:col-span-2">
+            <ProfilePanel />
+          </div>
+          <div className="col-span-1 sm:col-span-2">
+            <StatsPanel />
+          </div>
           <AchievementsPanel />
           <UpcomingEventsPanel />
           <NewsPanel />
