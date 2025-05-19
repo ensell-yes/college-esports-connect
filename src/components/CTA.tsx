@@ -1,6 +1,11 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Gamepad } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 const CTA = () => {
+  const navigate = useNavigate();
+  
   return <section className="py-20 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-br from-esports-purple/90 to-esports-teal/90 clip-path-slant"></div>
       
@@ -19,7 +24,12 @@ const CTA = () => {
                 Get Started Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="border-white px-8 py-6 text-esports-purple bg-white">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white px-8 py-6 text-esports-purple bg-white"
+                onClick={() => navigate("/demo")}
+              >
                 Request Demo
               </Button>
             </div>
