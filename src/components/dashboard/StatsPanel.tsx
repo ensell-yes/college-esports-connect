@@ -1,11 +1,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import ValorantStatsPanel from "./stats/ValorantStatsPanel";
 import RocketLeagueStatsPanel from "./stats/RocketLeagueStatsPanel";
 
@@ -17,31 +13,17 @@ const StatsPanel = () => {
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-semibold flex items-center justify-between">
           <span>Player Stats</span>
-          <div className="flex gap-2">
-            <Button
-              variant={selectedGame === "valorant" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedGame("valorant")}
-              className="text-xs"
-            >
-              Valorant
-            </Button>
-            <Button
-              variant={selectedGame === "rocket-league" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedGame("rocket-league")}
-              className="text-xs"
-            >
-              Rocket League
-            </Button>
-            <Button
-              variant={selectedGame === "league-of-legends" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedGame("league-of-legends")}
-              className="text-xs"
-            >
-              League of Legends
-            </Button>
+          <div className="w-48">
+            <Select value={selectedGame} onValueChange={setSelectedGame}>
+              <SelectTrigger className="h-8 text-xs">
+                <SelectValue placeholder="Game Stats" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="valorant">Valorant</SelectItem>
+                <SelectItem value="rocket-league">Rocket League</SelectItem>
+                <SelectItem value="league-of-legends">League of Legends</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardTitle>
       </CardHeader>
