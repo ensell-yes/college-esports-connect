@@ -7,7 +7,7 @@ import HeadlineSection from "./profile/HeadlineSection";
 import GamesSection from "./profile/GamesSection";
 import RecruitmentSection from "./profile/RecruitmentSection";
 import { Button } from "@/components/ui/button";
-import { School } from "lucide-react";
+import { School, Award } from "lucide-react";
 import { Game, ProfileData, RecruitmentOption } from "./profile/types";
 
 const ProfilePanel = () => {
@@ -57,14 +57,21 @@ const ProfilePanel = () => {
       <CardContent className="pt-2">
         <UserInfo profile={profile} onProfileUpdate={handleProfileUpdate} />
         
-        {/* Class of 2026 Button */}
-        <div className="mb-4 flex justify-start">
+        {/* Class of 2026 and Top 500 Recruit Buttons */}
+        <div className="mb-4 flex justify-start gap-2 flex-wrap">
           <Button 
             variant="outline" 
             size="sm" 
             className="border-esports-purple text-esports-purple hover:bg-esports-purple/10"
           >
             <School size={14} className="mr-1" /> Class of 2026
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="border-esports-orange text-esports-orange hover:bg-esports-orange/10"
+          >
+            <Award size={14} className="mr-1" /> Top 500 Recruit
           </Button>
         </div>
         
