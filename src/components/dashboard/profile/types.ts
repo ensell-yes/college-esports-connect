@@ -11,6 +11,12 @@ export interface RecruitmentOption {
   color: string;
 }
 
+// Esport Organization interface
+export interface EsportOrg {
+  name: string;
+  color: string;
+}
+
 // Profile data interface
 export interface ProfileData {
   prefix: string;

@@ -6,9 +6,10 @@ import UserInfo from "./profile/UserInfo";
 import HeadlineSection from "./profile/HeadlineSection";
 import GamesSection from "./profile/GamesSection";
 import RecruitmentSection from "./profile/RecruitmentSection";
+import EsportOrgsSection from "./profile/EsportOrgsSection";
 import { Button } from "@/components/ui/button";
 import { School, Award } from "lucide-react";
-import { Game, ProfileData, RecruitmentOption } from "./profile/types";
+import { Game, ProfileData, RecruitmentOption, EsportOrg } from "./profile/types";
 
 const ProfilePanel = () => {
   // Mock profile data - in a real app, this would come from a database
@@ -44,6 +45,15 @@ const ProfilePanel = () => {
     { name: "Looking for Support", color: "bg-blue-600" },
     { name: "Looking for Internship", color: "bg-green-600" }
   ];
+  
+  // Esport Organizations
+  const esportOrgs: EsportOrg[] = [
+    { name: "100 Thieves", color: "bg-red-600" },
+    { name: "Cloud9", color: "bg-blue-500" },
+    { name: "TSM", color: "bg-gray-800" },
+    { name: "Team Liquid", color: "bg-blue-700" },
+    { name: "FaZe Clan", color: "bg-red-700" }
+  ];
 
   // Handler for updating profile data
   const handleProfileUpdate = (updatedProfile: ProfileData) => {
@@ -78,6 +88,7 @@ const ProfilePanel = () => {
         <HeadlineSection profile={profile} onProfileUpdate={handleProfileUpdate} />
         <GamesSection games={games} />
         <RecruitmentSection recruitmentOptions={recruitmentOptions} />
+        <EsportOrgsSection esportOrgs={esportOrgs} />
       </CardContent>
     </Card>
   );
