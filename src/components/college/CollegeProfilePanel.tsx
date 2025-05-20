@@ -24,22 +24,26 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
       />
       
       <CardContent className="pt-0">
-        <div className="flex flex-col md:flex-row gap-4 -mt-12 md:-mt-16">
-          {/* School Logo */}
-          <CollegeLogoSection 
-            logo={college.logo}
-            collegeName={college.name}
-            onUpdate={(base64data) => onUpdate({ logo: base64data })}
-          />
+        <div className="flex flex-col -mt-12 md:-mt-16">
+          <div className="flex justify-center">
+            {/* School Logo */}
+            <CollegeLogoSection 
+              logo={college.logo}
+              collegeName={college.name}
+              onUpdate={(base64data) => onUpdate({ logo: base64data })}
+            />
+          </div>
           
-          {/* School Info */}
-          <CollegeInfoSection 
-            name={college.name}
-            city={college.city}
-            state={college.state}
-            country={college.country}
-            followers={college.followers}
-          />
+          {/* School Info - Now positioned below the logo on all screen sizes */}
+          <div className="mt-4 text-center">
+            <CollegeInfoSection 
+              name={college.name}
+              city={college.city}
+              state={college.state}
+              country={college.country}
+              followers={college.followers}
+            />
+          </div>
         </div>
         
         {/* Headline */}
