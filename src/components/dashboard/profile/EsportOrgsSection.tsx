@@ -8,8 +8,8 @@ interface EsportOrgsSectionProps {
 
 const EsportOrgsSection = ({ esportOrgs }: EsportOrgsSectionProps) => {
   return (
-    <div className="mb-4">
-      <h3 className="text-sm font-semibold flex items-center mb-2">
+    <div className="mt-6">
+      <h3 className="text-sm font-semibold text-gray-700 flex items-center mb-2">
         <Group size={16} className="mr-1 text-blue-600" />
         Esport Orgs
       </h3>
