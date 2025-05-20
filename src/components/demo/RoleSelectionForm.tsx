@@ -1,9 +1,9 @@
-
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import { toast } from "@/components/ui/sonner";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +41,8 @@ interface RoleSelectionFormProps {
 }
 
 const RoleSelectionForm = ({ onRoleSelected }: RoleSelectionFormProps) => {
+  const navigate = useNavigate();
+  
   // Role selection form
   const form = useForm<RoleFormValues>({
     resolver: zodResolver(roleSchema),
@@ -52,7 +54,14 @@ const RoleSelectionForm = ({ onRoleSelected }: RoleSelectionFormProps) => {
   // Handle role submission
   const handleRoleSubmit = (values: RoleFormValues) => {
     toast.success(`You selected: ${values.role}`);
-    onRoleSelected(values.role);
+    
+    // If administrator role is selected, redirect to college portal
+    if (values.role === "administrator") {
+      navigate("/college-portal");
+    } else {
+      // For other roles, use the provided callback
+      onRoleSelected(values.role);
+    }
   };
 
   return (
