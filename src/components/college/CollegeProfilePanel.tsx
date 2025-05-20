@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -80,7 +79,7 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
           <div className="relative">
             <div className="h-24 w-24 md:h-32 md:w-32 border-4 border-white rounded-md shadow-lg overflow-hidden bg-white">
               <img 
-                src={college.logo} 
+                src="/lovable-uploads/ca061be0-623d-41dd-99eb-6cdea177c746.png" 
                 alt={`${college.name} Logo`} 
                 className="w-full h-full object-contain" 
               />
