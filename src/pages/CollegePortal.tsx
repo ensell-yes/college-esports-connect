@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import CollegeLayout from "@/components/college/CollegeLayout";
 import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
@@ -25,7 +24,7 @@ const CollegePortal = () => {
     ],
     overview: "Graceland University, founded in 1895, creates learning communities where students develop their potential for meaningful, productive lives. Offering residential and non-residential environments, Graceland boasts more than 50 academic majors and programs and over 50 clubs and organizations.",
     website: "graceland.edu",
-    esportsWebsite: "https://esportsworldcup.com/en/news/EWCWinners-EWC"
+    esportsWebsite: "https://www.gujackets.com/sports/esports/index"
   });
 
   // Function to update college data

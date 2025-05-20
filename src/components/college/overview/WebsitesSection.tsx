@@ -127,7 +127,7 @@ const WebsitesSection = ({ website, esportsWebsite, onUpdate }: WebsitesSectionP
               rel="noopener noreferrer"
               className="ml-2 text-blue-600 hover:underline"
             >
-              {new URL(esportsWebsite).hostname}
+              {esportsWebsite.includes('gujackets.com') ? 'gujackets.com/sports/esports' : new URL(esportsWebsite).hostname}
             </a>
           </div>
         </div>
