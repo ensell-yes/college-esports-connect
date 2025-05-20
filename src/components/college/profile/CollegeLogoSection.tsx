@@ -25,7 +25,7 @@ const CollegeLogoSection = ({ logo, collegeName, onUpdate }: CollegeLogoSectionP
     <div className="relative">
       <div className="h-24 w-24 md:h-32 md:w-32 border-4 border-white rounded-md shadow-lg overflow-hidden bg-white">
         <img 
-          src="/lovable-uploads/ca061be0-623d-41dd-99eb-6cdea177c746.png" 
+          src="https://pbs.twimg.com/profile_images/1838647739149635584/NDiHx-YX_400x400.jpg" 
           alt={`${collegeName} Logo`} 
           className="w-full h-full object-contain" 
         />
