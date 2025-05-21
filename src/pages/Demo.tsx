@@ -7,7 +7,7 @@ import RoleSelectionForm from "@/components/demo/RoleSelectionForm";
 import StudentProfileForm from "@/components/student-profile/StudentProfileForm";
 import ConnectedAccountsForm from "@/components/connected-accounts/ConnectedAccountsForm";
 
-type Role = "student" | "coach" | null;
+type Role = "student" | "coach" | "parent" | "administrator" | null;
 type Step = "password" | "role" | "profile" | "connected-accounts";
 
 const Demo = () => {
@@ -46,7 +46,14 @@ const Demo = () => {
   };
 
   const handleConnectedAccountsCompletion = () => {
-    navigate("/");
+    // Navigate to the appropriate dashboard based on role
+    if (role === "student") {
+      navigate("/player-dashboard");
+    } else if (role === "coach" || role === "administrator") {
+      navigate("/program-dashboard");
+    } else {
+      navigate("/"); // Default fallback if role is unexpected
+    }
   };
 
   return (
@@ -69,6 +76,7 @@ const Demo = () => {
       {currentStep === "connected-accounts" && (
         <ConnectedAccountsForm 
           onBack={handleConnectedAccountsBack}
+          onComplete={handleConnectedAccountsCompletion}
         />
       )}
     </div>
