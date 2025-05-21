@@ -31,6 +31,9 @@ const CollegeProfile = () => {
   // Check if this is the program dashboard route
   const isProgramDashboard = location.pathname === "/program-dashboard";
   
+  // Check if this is the Graceland college profile route
+  const isGracelandProfile = location.pathname === "/college-profile-graceland";
+  
   // State for college data
   const [collegeData, setCollegeData] = useState<CollegeData>({
     name: "Graceland University",
@@ -101,8 +104,10 @@ const CollegeProfile = () => {
             onUpdate={handleUpdateCollege} 
           />
 
-          {/* Top Recruits Panel (spans across both columns) */}
-          <TopRecruitsPanel className="col-span-2 mt-6" />
+          {/* Top Recruits Panel - only show on program-dashboard, not on college-profile-graceland */}
+          {!isGracelandProfile && (
+            <TopRecruitsPanel className="col-span-2 mt-6" />
+          )}
         </CollegeLayout>
       </div>
 
