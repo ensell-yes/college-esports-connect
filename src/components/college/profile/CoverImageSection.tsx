@@ -34,6 +34,7 @@ const CoverImageSection = ({ coverImage, collegeName, onUpdate }: CoverImageSect
           aspectRatio={3.5}
           buttonIcon={<Camera size={16} className="text-gray-700" />}
           buttonVariant="ghost"
+          buttonText=""
           className="bg-white/80 p-1 rounded-full shadow hover:bg-white"
           maxSizeInMB={2}
         />

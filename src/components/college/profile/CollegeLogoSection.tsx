@@ -36,6 +36,7 @@ const CollegeLogoSection = ({ logo, collegeName, onUpdate }: CollegeLogoSectionP
           aspectRatio={1}
           buttonIcon={<Camera size={14} className="text-gray-700" />}
           buttonVariant="ghost"
+          buttonText=""
           className="bg-white p-1 rounded-full shadow hover:bg-gray-100"
           maxSizeInMB={2}
         />
