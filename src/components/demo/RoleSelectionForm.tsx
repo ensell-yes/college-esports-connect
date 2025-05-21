@@ -1,3 +1,4 @@
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,9 +56,9 @@ const RoleSelectionForm = ({ onRoleSelected }: RoleSelectionFormProps) => {
   const handleRoleSubmit = (values: RoleFormValues) => {
     toast.success(`You selected: ${values.role}`);
     
-    // If administrator role is selected, redirect to college portal
+    // If administrator role is selected, redirect to college profile
     if (values.role === "administrator") {
-      navigate("/college-portal");
+      navigate("/college-profile-graceland");
     } else {
       // For other roles, use the provided callback
       onRoleSelected(values.role);
