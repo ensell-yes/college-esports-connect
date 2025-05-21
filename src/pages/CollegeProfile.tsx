@@ -1,13 +1,36 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, Navigate } from "react-router-dom";
 import CollegeLayout from "@/components/college/CollegeLayout";
 import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
 import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
 import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
 import { CollegeData } from "@/components/college/types";
+import { useAuth } from "@/hooks/useAuth";
+import { 
+  Dialog, 
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+const PASSWORD = "Path2College";
 
 const CollegeProfile = () => {
-  // Initial college data
+  const location = useLocation();
+  const { hasDemoAccess, setDemoAccess } = useAuth();
+  const [password, setPassword] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+  const [error, setError] = useState("");
+
+  // Check if this is the program dashboard route
+  const isProgramDashboard = location.pathname === "/program-dashboard";
+  
+  // State for college data
   const [collegeData, setCollegeData] = useState<CollegeData>({
     name: "Graceland University",
     city: "Lamoni",
@@ -29,6 +52,23 @@ const CollegeProfile = () => {
     esportsWebsite: "https://www.gujackets.com/sports/esports/index"
   });
 
+  useEffect(() => {
+    // If accessing the program dashboard and not authenticated, show dialog
+    if (isProgramDashboard && !hasDemoAccess()) {
+      setShowDialog(true);
+    }
+  }, [isProgramDashboard, hasDemoAccess]);
+
+  const handlePasswordSubmit = () => {
+    if (password === PASSWORD) {
+      setDemoAccess(true);
+      setShowDialog(false);
+      setError("");
+    } else {
+      setError("Incorrect password");
+    }
+  };
+
   // Function to update college data
   const handleUpdateCollege = (updatedData: Partial<CollegeData>) => {
     setCollegeData(prevData => ({
@@ -36,6 +76,11 @@ const CollegeProfile = () => {
       ...updatedData
     }));
   };
+
+  // Redirect to 404 if trying to access program dashboard without auth
+  if (isProgramDashboard && !hasDemoAccess() && !showDialog) {
+    return <Navigate to="/not-found" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -59,6 +104,34 @@ const CollegeProfile = () => {
           <TopRecruitsPanel className="col-span-2 mt-6" />
         </CollegeLayout>
       </div>
+
+      {/* Password Dialog */}
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter Password</DialogTitle>
+            <DialogDescription>
+              This page requires a password to access.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input 
+                id="password" 
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit()}
+              />
+              {error && <p className="text-sm text-red-500">{error}</p>}
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={handlePasswordSubmit}>Submit</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

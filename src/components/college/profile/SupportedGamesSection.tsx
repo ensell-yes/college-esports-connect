@@ -1,11 +1,31 @@
 
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Pencil, Check, Plus } from "lucide-react";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import { CollegeGame } from "../types";
 
 interface SupportedGamesSectionProps {
-  games: { name: string; color: string }[];
+  games: CollegeGame[];
+  onUpdate?: (games: CollegeGame[]) => void;
 }
 
-const SupportedGamesSection = ({ games }: SupportedGamesSectionProps) => {
+const SupportedGamesSection = ({ games, onUpdate }: SupportedGamesSectionProps) => {
+  const [selectedGames, setSelectedGames] = useState<CollegeGame[]>(games || []);
+  const [isOpen, setIsOpen] = useState(false);
+  const { hasDemoAccess } = useAuth();
+
   // List of all possible games
   const allGames = [
     { name: "Rocket League", color: "bg-blue-500 hover:bg-blue-600" },
@@ -37,11 +57,81 @@ const SupportedGamesSection = ({ games }: SupportedGamesSectionProps) => {
     { name: "Teamfight Tactics", color: "bg-indigo-600 hover:bg-indigo-700" },
   ];
 
+  const toggleGame = (game: CollegeGame) => {
+    const gameIndex = selectedGames.findIndex(g => g.name === game.name);
+    if (gameIndex >= 0) {
+      // Remove the game
+      setSelectedGames(selectedGames.filter(g => g.name !== game.name));
+    } else {
+      // Add the game
+      setSelectedGames([...selectedGames, game]);
+    }
+  };
+
+  const handleSave = () => {
+    if (onUpdate) {
+      onUpdate(selectedGames);
+      toast.success("Supported games updated successfully");
+    }
+    setIsOpen(false);
+  };
+
+  const showEditButton = hasDemoAccess() && onUpdate;
+
   return (
     <div className="mt-6">
-      <h3 className="text-sm font-semibold text-gray-700 mb-2">Games Supported</h3>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-sm font-semibold text-gray-700">Games Supported</h3>
+        {showEditButton && (
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="sm">
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+              <SheetHeader>
+                <SheetTitle>Select Supported Games</SheetTitle>
+              </SheetHeader>
+              <div className="py-4">
+                <div className="grid grid-cols-2 gap-2">
+                  {allGames.map((game) => {
+                    const isSelected = selectedGames.some(g => g.name === game.name);
+                    return (
+                      <div key={game.name} className="flex items-center space-x-2 p-2 border rounded hover:bg-gray-50">
+                        <Checkbox 
+                          id={`game-${game.name}`} 
+                          checked={isSelected}
+                          onCheckedChange={() => toggleGame(game)}
+                        />
+                        <label 
+                          htmlFor={`game-${game.name}`}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer flex-1"
+                        >
+                          {game.name}
+                        </label>
+                        <Badge className={game.color.split(' ')[0]}>
+                          Sample
+                        </Badge>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="flex justify-end mt-4 space-x-2">
+                  <Button variant="outline" onClick={() => setIsOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={handleSave}>
+                    <Check className="mr-1 h-4 w-4" /> Save Changes
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        )}
+      </div>
       <div className="flex flex-wrap gap-2">
-        {allGames.map((game) => (
+        {(games || []).map((game) => (
           <Badge key={game.name} className={game.color}>
             {game.name}
           </Badge>

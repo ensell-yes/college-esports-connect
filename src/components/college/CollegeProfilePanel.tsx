@@ -14,13 +14,30 @@ interface CollegeProfilePanelProps {
 }
 
 const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfilePanelProps) => {
+  // Handler functions
+  const handleHeadlineUpdate = (headline: string) => {
+    onUpdate({ headline });
+  };
+
+  const handleCoverImageUpdate = (base64data: string) => {
+    onUpdate({ coverImage: base64data });
+  };
+
+  const handleLogoUpdate = (base64data: string) => {
+    onUpdate({ logo: base64data });
+  };
+
+  const handleGamesUpdate = (games: typeof college.games) => {
+    onUpdate({ games });
+  };
+
   return (
     <Card className={`shadow-md ${className}`}>
       {/* Cover Image */}
       <CoverImageSection 
         coverImage={college.coverImage}
         collegeName={college.name}
-        onUpdate={(base64data) => onUpdate({ coverImage: base64data })}
+        onUpdate={handleCoverImageUpdate}
       />
       
       <CardContent className="pt-0">
@@ -30,7 +47,7 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
             <CollegeLogoSection 
               logo={college.logo}
               collegeName={college.name}
-              onUpdate={(base64data) => onUpdate({ logo: base64data })}
+              onUpdate={handleLogoUpdate}
             />
           </div>
           
@@ -49,11 +66,11 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
         {/* Headline */}
         <HeadlineSection 
           headline={college.headline}
-          onUpdate={(headline) => onUpdate({ headline })}
+          onUpdate={handleHeadlineUpdate}
         />
         
         {/* Games Supported */}
-        <SupportedGamesSection games={college.games} />
+        <SupportedGamesSection games={college.games} onUpdate={handleGamesUpdate} />
       </CardContent>
     </Card>
   );
