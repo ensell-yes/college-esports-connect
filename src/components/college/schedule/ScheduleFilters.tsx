@@ -1,10 +1,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GameType, ScheduleFilters } from "./types";
+import { GameType, ScheduleFilters as ScheduleFiltersType } from "./types";
 
 interface ScheduleFiltersProps {
-  filters: ScheduleFilters;
+  filters: ScheduleFiltersType;
   onGameTypeChange: (gameType: GameType) => void;
   onToggleCompleted: () => void;
   onToggleUpcoming: () => void;
