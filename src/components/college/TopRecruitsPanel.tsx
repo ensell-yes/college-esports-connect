@@ -20,13 +20,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowUpDown, Filter, ArrowUp, ArrowDown } from "lucide-react";
 import { Recruit, RecruitmentStatus, Classification, ValorantAgent } from "./types/recruitTypes";
 import { recruitData } from "./data/recruitData";
@@ -45,6 +45,12 @@ interface SortState {
   direction: SortDirection;
 }
 
+interface MultiFilterState {
+  classifications: Classification[];
+  agents: ValorantAgent[];
+  statuses: RecruitmentStatus[];
+}
+
 const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
   // State for selected game and count
   const [selectedGame, setSelectedGame] = useState<GameOption>("Valorant");
@@ -53,11 +59,11 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
   // State for sorting
   const [sort, setSort] = useState<SortState>({ column: "rank", direction: "asc" });
   
-  // State for filters
-  const [filters, setFilters] = useState({
-    classification: "" as Classification | "",
-    agent: "" as ValorantAgent | "",
-    status: "" as RecruitmentStatus | "",
+  // State for multi-select filters
+  const [filters, setFilters] = useState<MultiFilterState>({
+    classifications: [],
+    agents: [],
+    statuses: []
   });
 
   // Toggle sort direction for a column
@@ -86,39 +92,73 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
       : <ArrowDown className="ml-2 h-4 w-4" />;
   };
 
-  // Handle filter changes
-  const handleFilterChange = (filterType: keyof typeof filters, value: string) => {
-    setFilters(prev => ({
-      ...prev,
-      [filterType]: value
-    }));
+  // Handle checkbox filter changes
+  const toggleFilter = (filterType: keyof MultiFilterState, value: Classification | ValorantAgent | RecruitmentStatus) => {
+    setFilters(prev => {
+      const currentValues = prev[filterType] as any[];
+      return {
+        ...prev,
+        [filterType]: currentValues.includes(value)
+          ? currentValues.filter(item => item !== value)
+          : [...currentValues, value]
+      };
+    });
   };
 
   // Reset all filters
   const resetFilters = () => {
     setFilters({
-      classification: "",
-      agent: "",
-      status: ""
+      classifications: [],
+      agents: [],
+      statuses: []
     });
   };
+
+  // Extract unique values for filter dropdowns
+  const filterOptions = useMemo(() => {
+    const valorantRecruits = recruitData.filter(recruit => recruit.game === "Valorant");
+    
+    const classifications = Array.from(new Set(
+      valorantRecruits.map(recruit => recruit.classification)
+    )) as Classification[];
+    
+    const agents = Array.from(new Set(
+      valorantRecruits
+        .filter(recruit => recruit.game === "Valorant")
+        .map(recruit => (recruit.game === "Valorant" ? recruit.mainAgent : undefined))
+        .filter(Boolean)
+    )) as ValorantAgent[];
+    
+    const statuses = Array.from(new Set(
+      valorantRecruits.map(recruit => recruit.recruitmentStatus)
+    )) as RecruitmentStatus[];
+    
+    return { classifications, agents, statuses };
+  }, []);
 
   // Filter and sort recruits based on selected options
   const processedRecruits = useMemo(() => {
     let filtered = recruitData.filter(recruit => recruit.game === selectedGame);
 
-    // Apply filters
-    if (filters.classification) {
-      filtered = filtered.filter(recruit => recruit.classification === filters.classification);
+    // Apply classification filters if any are selected
+    if (filters.classifications.length > 0) {
+      filtered = filtered.filter(recruit => 
+        filters.classifications.includes(recruit.classification)
+      );
     }
 
-    if (filters.status) {
-      filtered = filtered.filter(recruit => recruit.recruitmentStatus === filters.status);
+    // Apply status filters if any are selected
+    if (filters.statuses.length > 0) {
+      filtered = filtered.filter(recruit => 
+        filters.statuses.includes(recruit.recruitmentStatus)
+      );
     }
 
-    if (filters.agent && selectedGame === "Valorant") {
+    // Apply agent filters if any are selected (only for Valorant)
+    if (filters.agents.length > 0 && selectedGame === "Valorant") {
       filtered = filtered.filter(
-        recruit => recruit.game === "Valorant" && recruit.mainAgent === filters.agent
+        recruit => recruit.game === "Valorant" && 
+          filters.agents.includes(recruit.mainAgent)
       );
     }
 
@@ -168,27 +208,11 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
   // Check if the selected game has enough data or if it's still coming soon
   const isComingSoon = selectedGame === "Rocket League" || selectedGame === "League of Legends";
   
-  // Extract unique values for filter dropdowns
-  const filterOptions = useMemo(() => {
-    const valorantRecruits = recruitData.filter(recruit => recruit.game === "Valorant");
-    
-    const classifications = Array.from(new Set(
-      valorantRecruits.map(recruit => recruit.classification)
-    )) as Classification[];
-    
-    const agents = Array.from(new Set(
-      valorantRecruits
-        .filter(recruit => recruit.game === "Valorant")
-        .map(recruit => (recruit.game === "Valorant" ? recruit.mainAgent : undefined))
-        .filter(Boolean)
-    )) as ValorantAgent[];
-    
-    const statuses = Array.from(new Set(
-      valorantRecruits.map(recruit => recruit.recruitmentStatus)
-    )) as RecruitmentStatus[];
-    
-    return { classifications, agents, statuses };
-  }, []);
+  // Get active filter count for the button label
+  const activeFilterCount = Object.values(filters).reduce(
+    (count, filterArray) => count + filterArray.length, 
+    0
+  );
 
   return (
     <Card className={`shadow-md ${className}`}>
@@ -225,12 +249,17 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
             </SelectContent>
           </Select>
           
-          {/* Filter button */}
+          {/* Filter button with badge */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="gap-2">
                 <Filter className="h-4 w-4" />
                 Filters
+                {activeFilterCount > 0 && (
+                  <span className="ml-1 rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">
+                    {activeFilterCount}
+                  </span>
+                )}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -239,18 +268,25 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
               
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="px-2 text-xs">Classification</DropdownMenuLabel>
-                <DropdownMenuItem onSelect={() => handleFilterChange("classification", "")}>
-                  All
-                </DropdownMenuItem>
-                {filterOptions.classifications.map((cls) => (
-                  <DropdownMenuItem 
-                    key={cls} 
-                    onSelect={() => handleFilterChange("classification", cls)}
-                    className={filters.classification === cls ? "bg-accent" : ""}
-                  >
-                    {cls}
-                  </DropdownMenuItem>
-                ))}
+                <ScrollArea className="h-[120px]">
+                  <div className="p-2 space-y-1">
+                    {filterOptions.classifications.map((cls) => (
+                      <div key={cls} className="flex items-center space-x-2">
+                        <Checkbox 
+                          id={`classification-${cls}`} 
+                          checked={filters.classifications.includes(cls)}
+                          onCheckedChange={() => toggleFilter('classifications', cls)}
+                        />
+                        <label 
+                          htmlFor={`classification-${cls}`}
+                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {cls}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </DropdownMenuGroup>
               
               <DropdownMenuSeparator />
@@ -259,18 +295,25 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
                 <>
                   <DropdownMenuGroup>
                     <DropdownMenuLabel className="px-2 text-xs">Agent</DropdownMenuLabel>
-                    <DropdownMenuItem onSelect={() => handleFilterChange("agent", "")}>
-                      All
-                    </DropdownMenuItem>
-                    {filterOptions.agents.map((agent) => (
-                      <DropdownMenuItem 
-                        key={agent} 
-                        onSelect={() => handleFilterChange("agent", agent)}
-                        className={filters.agent === agent ? "bg-accent" : ""}
-                      >
-                        {agent}
-                      </DropdownMenuItem>
-                    ))}
+                    <ScrollArea className="h-[180px]">
+                      <div className="p-2 space-y-1">
+                        {filterOptions.agents.map((agent) => (
+                          <div key={agent} className="flex items-center space-x-2">
+                            <Checkbox 
+                              id={`agent-${agent}`} 
+                              checked={filters.agents.includes(agent)}
+                              onCheckedChange={() => toggleFilter('agents', agent)}
+                            />
+                            <label 
+                              htmlFor={`agent-${agent}`}
+                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              {agent}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                 </>
@@ -278,24 +321,38 @@ const TopRecruitsPanel = ({ className = "" }: TopRecruitsPanelProps) => {
               
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="px-2 text-xs">Status</DropdownMenuLabel>
-                <DropdownMenuItem onSelect={() => handleFilterChange("status", "")}>
-                  All
-                </DropdownMenuItem>
-                {filterOptions.statuses.map((status) => (
-                  <DropdownMenuItem 
-                    key={status} 
-                    onSelect={() => handleFilterChange("status", status)}
-                    className={filters.status === status ? "bg-accent" : ""}
-                  >
-                    {status}
-                  </DropdownMenuItem>
-                ))}
+                <ScrollArea className="h-[120px]">
+                  <div className="p-2 space-y-1">
+                    {filterOptions.statuses.map((status) => (
+                      <div key={status} className="flex items-center space-x-2">
+                        <Checkbox 
+                          id={`status-${status}`} 
+                          checked={filters.statuses.includes(status)}
+                          onCheckedChange={() => toggleFilter('statuses', status)}
+                        />
+                        <label 
+                          htmlFor={`status-${status}`}
+                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {status}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </DropdownMenuGroup>
               
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={resetFilters} className="justify-center font-medium">
-                Reset All Filters
-              </DropdownMenuItem>
+              <div className="p-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full" 
+                  onClick={resetFilters}
+                >
+                  Reset All Filters
+                </Button>
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
