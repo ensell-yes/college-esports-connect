@@ -1,10 +1,12 @@
 
 import { FC, useState } from "react";
-import { Camera } from "lucide-react";
+import { Camera, UserPlus, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageUploader from "@/components/dashboard/profile/ImageUploader";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import RecruitingForm from "./RecruitingForm";
 
 interface CoverImageSectionProps {
   coverImage: string;
@@ -14,6 +16,7 @@ interface CoverImageSectionProps {
 
 const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName, onUpdate }) => {
   const { hasDemoAccess } = useAuth();
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const handleImageUpdate = (imageBlob: Blob) => {
     const reader = new FileReader();
@@ -23,6 +26,11 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
       onUpdate(base64data);
       toast.success("Cover image updated successfully");
     };
+  };
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+    toast.success(isFollowing ? "Unfollowed successfully" : "Following successfully");
   };
 
   const showEditButton = hasDemoAccess();
@@ -35,6 +43,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
         className="w-full h-full object-cover" 
       />
       
+      {/* Edit button */}
       {showEditButton && (
         <div className="absolute top-2 right-2">
           <ImageUploader
@@ -48,6 +57,38 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
           />
         </div>
       )}
+
+      {/* New action buttons */}
+      <div className="absolute bottom-4 right-4 flex space-x-2">
+        <Button 
+          size="sm"
+          variant={isFollowing ? "default" : "outline"}
+          onClick={handleFollow}
+          className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+        >
+          <UserPlus size={16} className="mr-1" />
+          {isFollowing ? "Following" : "Follow"}
+        </Button>
+        
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button 
+              size="sm"
+              variant="outline"
+              className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+            >
+              <Info size={16} className="mr-1" />
+              Recruiting Information
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="overflow-y-auto" side="right">
+            <SheetHeader>
+              <SheetTitle>Esports Recruiting Information</SheetTitle>
+            </SheetHeader>
+            <RecruitingForm collegeName={collegeName} />
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
 };
