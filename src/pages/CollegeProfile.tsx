@@ -5,6 +5,7 @@ import CollegeLayout from "@/components/college/CollegeLayout";
 import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
 import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
 import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
+import SchedulePanel from "@/components/college/schedule/SchedulePanel"; // Import the new SchedulePanel
 import { CollegeData } from "@/components/college/types";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "./NotFound";
@@ -102,6 +103,12 @@ const CollegeProfile = () => {
             className="col-span-2" 
             college={collegeData} 
             onUpdate={handleUpdateCollege} 
+          />
+
+          {/* Schedule & Results Panel (show on all college profiles) */}
+          <SchedulePanel 
+            className="col-span-2 mt-6" 
+            initialGameType="Valorant"
           />
 
           {/* Top Recruits Panel - only show on program-dashboard, not on college-profile-graceland */}
