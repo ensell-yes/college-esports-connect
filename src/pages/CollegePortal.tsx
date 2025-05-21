@@ -1,7 +1,9 @@
+
 import { useState } from "react";
 import CollegeLayout from "@/components/college/CollegeLayout";
 import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
 import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
+import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
 import { CollegeData } from "@/components/college/types";
 
 const CollegePortal = () => {
@@ -54,6 +56,9 @@ const CollegePortal = () => {
             college={collegeData} 
             onUpdate={handleUpdateCollege} 
           />
+
+          {/* Top Recruits Panel (spans across both columns) */}
+          <TopRecruitsPanel className="col-span-2 mt-6" />
         </CollegeLayout>
       </div>
     </div>
