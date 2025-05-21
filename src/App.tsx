@@ -27,9 +27,10 @@ const App = () => (
             <Route path="/demo" element={<Demo />} />
             <Route path="/player-dashboard" element={<Dashboard />} />
             <Route path="/college-profile-graceland" element={<CollegeProfile />} />
+            {/* Program dashboard route */}
+            <Route path="/program-dashboard" element={<CollegeProfile />} />
             {/* Redirect old routes to new route */}
             <Route path="/college-portal" element={<Navigate to="/program-dashboard" replace />} />
-            <Route path="/program-dashboard" element={<CollegeProfile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
