@@ -23,9 +23,6 @@ const Navbar = () => {
           <Link to="/" className="text-esports-dark hover:text-esports-purple font-medium transition-colors">
             Home
           </Link>
-          <Link to="/college-profile-graceland" className="text-esports-dark hover:text-esports-purple font-medium transition-colors">
-            College Profile
-          </Link>
           <Link to="#features" className="text-esports-dark hover:text-esports-purple font-medium transition-colors">
             Features
           </Link>
@@ -49,9 +46,6 @@ const Navbar = () => {
             <nav className="flex flex-col gap-4">
               <Link to="/" className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2" onClick={toggleMenu}>
                 Home
-              </Link>
-              <Link to="/college-profile-graceland" className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2" onClick={toggleMenu}>
-                College Profile
               </Link>
               <Link to="#features" className="text-esports-dark hover:text-esports-purple font-medium transition-colors py-2" onClick={toggleMenu}>
                 Features
