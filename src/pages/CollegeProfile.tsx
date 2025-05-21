@@ -39,7 +39,7 @@ const CollegeProfile = () => {
     country: "USA",
     headline: "Graceland creates learning communities where students develop their potential for meaningful and productive lives.",
     followers: 14000,
-    logo: "/lovable-uploads/ca061be0-623d-41dd-99eb-6cdea177c746.png",
+    logo: "https://pbs.twimg.com/profile_images/1838647739149635584/NDiHx-YX_400x400.jpg",
     coverImage: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1586&auto=format&fit=crop&ixlib=rb-4.0.3",
     games: [
       { name: "Rocket League", color: "bg-blue-500" },
