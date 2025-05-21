@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from "react";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CollegeLayout from "@/components/college/CollegeLayout";
 import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
 import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
 import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
 import { CollegeData } from "@/components/college/types";
 import { useAuth } from "@/hooks/useAuth";
+import NotFound from "./NotFound";
 import { 
   Dialog, 
   DialogContent,
@@ -77,9 +78,9 @@ const CollegeProfile = () => {
     }));
   };
 
-  // Redirect to 404 if trying to access program dashboard without auth
+  // Show 404 component if trying to access program dashboard without auth
   if (isProgramDashboard && !hasDemoAccess() && !showDialog) {
-    return <Navigate to="/not-found" replace />;
+    return <NotFound />;
   }
 
   return (
