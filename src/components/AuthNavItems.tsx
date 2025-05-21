@@ -18,6 +18,9 @@ export const AuthNavItems = () => {
   if (user) {
     return (
       <div className="flex items-center gap-3">
+        <Link to="/college-profile-graceland" className="text-esports-purple hover:text-esports-purple/80">
+          College Profile
+        </Link>
         <span className="hidden md:inline text-sm text-gray-600">
           {user.email}
         </span>
@@ -30,6 +33,9 @@ export const AuthNavItems = () => {
 
   return (
     <div className="flex items-center gap-3">
+      <Link to="/college-profile-graceland" className="text-esports-purple hover:text-esports-purple/80 mr-2">
+        College Profile
+      </Link>
       <Link to="/auth">
         <Button variant="outline">Sign In</Button>
       </Link>

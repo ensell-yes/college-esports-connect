@@ -56,13 +56,8 @@ const RoleSelectionForm = ({ onRoleSelected }: RoleSelectionFormProps) => {
   const handleRoleSubmit = (values: RoleFormValues) => {
     toast.success(`You selected: ${values.role}`);
     
-    // If administrator role is selected, redirect to college profile
-    if (values.role === "administrator") {
-      navigate("/college-profile-graceland");
-    } else {
-      // For other roles, use the provided callback
-      onRoleSelected(values.role);
-    }
+    // For all roles, use the provided callback instead of redirecting
+    onRoleSelected(values.role);
   };
 
   return (
