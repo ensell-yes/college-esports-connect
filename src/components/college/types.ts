@@ -16,6 +16,7 @@ export interface CollegeData {
   logo: string;
   coverImage: string;
   games: CollegeGame[];
+  activelyRecruitingGames?: CollegeGame[];
   overview: string;
   website: string;
   esportsWebsite: string;

@@ -6,6 +6,7 @@ import CollegeLogoSection from "./profile/CollegeLogoSection";
 import CollegeInfoSection from "./profile/CollegeInfoSection";
 import HeadlineSection from "./profile/HeadlineSection";
 import SupportedGamesSection from "./profile/SupportedGamesSection";
+import ActivelyRecruitingSection from "./profile/ActivelyRecruitingSection";
 
 interface CollegeProfilePanelProps {
   college: CollegeData;
@@ -29,6 +30,10 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
 
   const handleGamesUpdate = (games: typeof college.games) => {
     onUpdate({ games });
+  };
+
+  const handleActivelyRecruitingUpdate = (games: typeof college.games) => {
+    onUpdate({ activelyRecruitingGames: games });
   };
 
   return (
@@ -71,6 +76,12 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
         
         {/* Games Supported */}
         <SupportedGamesSection games={college.games} onUpdate={handleGamesUpdate} />
+        
+        {/* Actively Recruiting */}
+        <ActivelyRecruitingSection 
+          games={college.activelyRecruitingGames || []} 
+          onUpdate={handleActivelyRecruitingUpdate}
+        />
       </CardContent>
     </Card>
   );

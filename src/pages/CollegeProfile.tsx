@@ -52,6 +52,11 @@ const CollegeProfile = () => {
       { name: "Counter-Strike", color: "bg-green-700" },
       { name: "Fortnite", color: "bg-orange-500" }
     ],
+    activelyRecruitingGames: [
+      { name: "Rocket League", color: "bg-blue-500" },
+      { name: "Valorant", color: "bg-red-500" },
+      { name: "Marvel Rivals", color: "bg-red-600" }
+    ],
     overview: "Graceland University, founded in 1895, creates learning communities where students develop their potential for meaningful, productive lives. Offering residential and non-residential environments, Graceland boasts more than 50 academic majors and programs and over 50 clubs and organizations.",
     website: "graceland.edu",
     esportsWebsite: "https://www.gujackets.com/sports/esports/index"
