@@ -39,7 +39,9 @@ const Dashboard = () => {
           <UpcomingEventsPanel />
           <NewsPanel />
           <FriendsPanel />
-          <IntegratedCommPanel />
+          <div className="col-span-1 sm:col-span-2">
+            <IntegratedCommPanel />
+          </div>
         </DashboardLayout>
       </div>
     </div>
