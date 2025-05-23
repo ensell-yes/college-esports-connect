@@ -37,13 +37,13 @@ const CollegeProfile = () => {
     website: "https://www.graceland.edu",
     esportsWebsite: "https://www.graceland.edu/esports",
     games: [
-      { name: "Valorant", color: "red" },
-      { name: "Rocket League", color: "blue" },
-      { name: "League of Legends", color: "purple" }
+      { name: "Valorant", color: "bg-red-500 hover:bg-red-600" },
+      { name: "Rocket League", color: "bg-blue-500 hover:bg-blue-600" },
+      { name: "League of Legends", color: "bg-purple-600 hover:bg-purple-700" }
     ],
     activelyRecruitingGames: [
-      { name: "Valorant", color: "red" },
-      { name: "Rocket League", color: "blue" }
+      { name: "Valorant", color: "bg-red-500 hover:bg-red-600" },
+      { name: "Rocket League", color: "bg-blue-500 hover:bg-blue-600" }
     ]
   });
 
