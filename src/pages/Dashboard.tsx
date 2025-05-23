@@ -9,6 +9,7 @@ import AchievementsPanel from "@/components/dashboard/AchievementsPanel";
 import UpcomingEventsPanel from "@/components/dashboard/UpcomingEventsPanel";
 import NewsPanel from "@/components/dashboard/NewsPanel";
 import FriendsPanel from "@/components/dashboard/FriendsPanel";
+import IntegratedCommPanel from "@/components/dashboard/communications/IntegratedCommPanel";
 import Navbar from "@/components/Navbar";
 
 const Dashboard = () => {
@@ -38,6 +39,7 @@ const Dashboard = () => {
           <UpcomingEventsPanel />
           <NewsPanel />
           <FriendsPanel />
+          <IntegratedCommPanel />
         </DashboardLayout>
       </div>
     </div>
