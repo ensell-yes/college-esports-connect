@@ -21,7 +21,7 @@ const GameItem = ({ game }: GameItemProps) => {
         </div>
         
         {game.completed ? (
-          <Badge variant={game.result?.win ? "success" : "destructive"}>
+          <Badge variant={game.result?.win ? "secondary" : "destructive"} className={game.result?.win ? "bg-green-500 hover:bg-green-600" : ""}>
             {game.result?.win ? "Win" : "Loss"}
           </Badge>
         ) : (
