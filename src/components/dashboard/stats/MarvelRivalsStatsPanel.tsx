@@ -31,10 +31,10 @@ const MarvelRivalsStatsPanel = () => {
     value: 1 + Math.random() * 1.5
   }));
 
-  // Mock roles data for the roles played table
-  const mockRolesData = profileData.data.segments.slice(1);
 
   const RolesPlayedTable = () => {
+    // Pull roles stats from the mock profile data
+    const mockRolesData = profileData.data.segments.slice(1);
     return (
       <div className="space-y-2">
         <h3 className="font-semibold text-sm flex items-center gap-1">
@@ -61,7 +61,7 @@ const MarvelRivalsStatsPanel = () => {
                       <img
                         src={role.metadata.imageUrl}
                         alt={role.metadata.name}
-                        className="w-6 h-6 rounded-full"
+                        className="w-6 h-6 rounded-full bg-indigo-900"
                       />
                       {role.metadata.name}
                     </div>
