@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ValorantStatsPanel from "./stats/ValorantStatsPanel";
 import RocketLeagueStatsPanel from "./stats/RocketLeagueStatsPanel";
+import MarvelRivalsStatsPanel from "./stats/MarvelRivalsStatsPanel";
 
 const StatsPanel = () => {
   const [selectedGame, setSelectedGame] = useState("valorant");
@@ -20,7 +21,8 @@ const StatsPanel = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="valorant">Valorant</SelectItem>
-                <SelectItem value="rocket-league">Marvel Rivals</SelectItem>
+                <SelectItem value="rocket-league">Rocket League</SelectItem>
+                <SelectItem value="marvel-rivals">Marvel Rivals</SelectItem>
                 <SelectItem value="league-of-legends">League of Legends</SelectItem>
               </SelectContent>
             </Select>
@@ -30,6 +32,7 @@ const StatsPanel = () => {
       <CardContent>
         {selectedGame === "valorant" && <ValorantStatsPanel />}
         {selectedGame === "rocket-league" && <RocketLeagueStatsPanel />}
+        {selectedGame === "marvel-rivals" && <MarvelRivalsStatsPanel />}
         {selectedGame === "league-of-legends" && (
           <div className="py-8 text-center">
             <p className="text-gray-500">League of Legends stats coming soon</p>
