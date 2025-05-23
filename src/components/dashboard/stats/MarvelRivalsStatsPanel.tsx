@@ -29,6 +29,47 @@ const MarvelRivalsStatsPanel = () => {
     value: 1 + Math.random() * 1.5
   }));
 
+  const RolesPlayedTable = () => {
+    return (
+      <div style={{ padding: '20px' }}>
+        <h2>Roles Played - Marvel Rivals</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#f4f4f4' }}>
+              <th style={cellStyle}>Role</th>
+              <th style={cellStyle}>Matches Played</th>
+              <th style={cellStyle}>Win Rate (%)</th>
+              <th style={cellStyle}>Kills</th>
+              <th style={cellStyle}>Deaths</th>
+              <th style={cellStyle}>Assists</th>
+              <th style={cellStyle}>KDA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {mockData.map((role) => (
+              <tr key={role.attributes.roleId}>
+                <td style={cellStyle}>
+                  <img
+                    src={role.metadata.imageUrl}
+                    alt={role.metadata.name}
+                    style={{ width: '24px', verticalAlign: 'middle', marginRight: '8px' }}
+                  />
+                  {role.metadata.name}
+                </td>
+                <td style={cellStyle}>{role.stats.matchesPlayed.value}</td>
+                <td style={cellStyle}>{role.stats.winRate.value.toFixed(1)}</td>
+                <td style={cellStyle}>{role.stats.kills.value}</td>
+                <td style={cellStyle}>{role.stats.deaths.value}</td>
+                <td style={cellStyle}>{role.stats.assists.value}</td>
+                <td style={cellStyle}>{role.stats.kda.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap gap-2">
@@ -177,6 +218,10 @@ const MarvelRivalsStatsPanel = () => {
             </LineChart>
           </ResponsiveContainer>
         </div>
+      </div>
+
+      <div className="mt-4">
+        {RolesPlayedTable()}
       </div>
     </div>
   );
