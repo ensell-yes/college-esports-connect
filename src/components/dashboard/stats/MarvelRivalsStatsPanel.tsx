@@ -92,10 +92,8 @@ const MarvelRivalsStatsPanel = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="deathmatch">Deathmatch</SelectItem>
-              <SelectItem value="escort">Escort</SelectItem>
-              <SelectItem value="domination">Domination</SelectItem>
-              <SelectItem value="ranked">Ranked</SelectItem>
+              <SelectItem value="competitive">Competitive</SelectItem>
+              <SelectItem value="quickmatch">Quick Match</SelectItem>
             </SelectContent>
           </Select>
         </div>
