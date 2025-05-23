@@ -115,6 +115,105 @@ export const marvelRivalsMockData = {
             value: 186500
           }
         }
+      },
+      {
+        type: "hero-role",
+        attributes: {
+          roleId: "strategist"
+        },
+        metadata: {
+          name: "Strategist",
+          imageUrl: "https://trackercdn.com/cdn/tracker.gg/marvel-rivals/images/roles/strategist.png"
+        },
+        stats: {
+          matchesPlayed: {
+            value: 86
+          },
+          matchesWon: {
+            value: 33
+          },
+          winRate: {
+            value: 38.4
+          },
+          kills: {
+            value: 713
+          },
+          deaths: {
+            value: 475
+          },
+          assists: {
+            value: 861
+          },
+          kda: {
+            value: 3.31
+          }
+        }
+      },
+      {
+        type: "hero-role",
+        attributes: {
+          roleId: "vanguard"
+        },
+        metadata: {
+          name: "Vanguard",
+          imageUrl: "https://trackercdn.com/cdn/tracker.gg/marvel-rivals/images/roles/vanguard.png"
+        },
+        stats: {
+          matchesPlayed: {
+            value: 28
+          },
+          matchesWon: {
+            value: 9
+          },
+          winRate: {
+            value: 32.1
+          },
+          kills: {
+            value: 196
+          },
+          deaths: {
+            value: 175
+          },
+          assists: {
+            value: 24
+          },
+          kda: {
+            value: 1.26
+          }
+        }
+      },
+      {
+        type: "hero-role",
+        attributes: {
+          roleId: "duelist"
+        },
+        metadata: {
+          name: "Duelist",
+          imageUrl: "https://trackercdn.com/cdn/tracker.gg/marvel-rivals/images/roles/duelist.png"
+        },
+        stats: {
+          matchesPlayed: {
+            value: 3
+          },
+          matchesWon: {
+            value: 1
+          },
+          winRate: {
+            value: 33.3
+          },
+          kills: {
+            value: 48
+          },
+          deaths: {
+            value: 20
+          },
+          assists: {
+            value: 0
+          },
+          kda: {
+            value: 2.4
+          }
+        }
       }
     ]
   }
