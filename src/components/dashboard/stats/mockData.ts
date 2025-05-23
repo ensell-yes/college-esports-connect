@@ -1,3 +1,4 @@
+
 // Mock data for Valorant stats
 export const valorantMockData = {
   kdRatio: {
@@ -58,7 +59,7 @@ export const marvelRivalsMockData = {
     segments: [
       {
         type: "overview",
-        attributes": { },
+        attributes: { },
         metadata: {
           name: "All Characters"
         },
