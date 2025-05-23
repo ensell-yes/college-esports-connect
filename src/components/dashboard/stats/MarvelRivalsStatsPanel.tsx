@@ -14,6 +14,8 @@ import {
   Bomb
 } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 
 const MarvelRivalsStatsPanel = () => {
   const [gameMode, setGameMode] = useState("all");
@@ -28,6 +30,93 @@ const MarvelRivalsStatsPanel = () => {
     date: `${i + 1}`,
     value: 1 + Math.random() * 1.5
   }));
+
+  // Mock roles data for the roles played table
+  const mockRolesData = [
+    {
+      attributes: { roleId: "assault" },
+      metadata: { name: "Assault", imageUrl: "https://via.placeholder.com/24" },
+      stats: {
+        matchesPlayed: { value: 38 },
+        winRate: { value: 52.6 },
+        kills: { value: 356 },
+        deaths: { value: 292 },
+        assists: { value: 178 },
+        kda: { value: 1.83 }
+      }
+    },
+    {
+      attributes: { roleId: "tank" },
+      metadata: { name: "Tank", imageUrl: "https://via.placeholder.com/24" },
+      stats: {
+        matchesPlayed: { value: 22 },
+        winRate: { value: 59.1 },
+        kills: { value: 176 },
+        deaths: { value: 204 },
+        assists: { value: 213 },
+        kda: { value: 1.91 }
+      }
+    },
+    {
+      attributes: { roleId: "support" },
+      metadata: { name: "Support", imageUrl: "https://via.placeholder.com/24" },
+      stats: {
+        matchesPlayed: { value: 14 },
+        winRate: { value: 42.9 },
+        kills: { value: 89 },
+        deaths: { value: 112 },
+        assists: { value: 276 },
+        kda: { value: 3.26 }
+      }
+    }
+  ];
+
+  const RolesPlayedTable = () => {
+    return (
+      <div className="space-y-2">
+        <h3 className="font-semibold text-sm flex items-center gap-1">
+          Roles Played - Marvel Rivals
+        </h3>
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50">
+                <TableHead>Role</TableHead>
+                <TableHead className="text-right">Matches</TableHead>
+                <TableHead className="text-right">Win Rate (%)</TableHead>
+                <TableHead className="text-right">Kills</TableHead>
+                <TableHead className="text-right">Deaths</TableHead>
+                <TableHead className="text-right">Assists</TableHead>
+                <TableHead className="text-right">KDA</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mockRolesData.map((role) => (
+                <TableRow key={role.attributes.roleId}>
+                  <TableCell className="font-medium">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={role.metadata.imageUrl}
+                        alt={role.metadata.name}
+                        className="w-6 h-6 rounded-full"
+                      />
+                      {role.metadata.name}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">{role.stats.matchesPlayed.value}</TableCell>
+                  <TableCell className="text-right">{role.stats.winRate.value.toFixed(1)}</TableCell>
+                  <TableCell className="text-right">{role.stats.kills.value}</TableCell>
+                  <TableCell className="text-right">{role.stats.deaths.value}</TableCell>
+                  <TableCell className="text-right">{role.stats.assists.value}</TableCell>
+                  <TableCell className="text-right">{role.stats.kda.value}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -54,18 +143,22 @@ const MarvelRivalsStatsPanel = () => {
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-sm">K/D RATIO</h3>
             <div className="flex rounded-md bg-muted/30 p-1">
-              <button 
-                className={`text-xs px-3 py-1 rounded ${timeframe === 'lifetime' ? 'bg-background shadow-sm' : ''}`}
+              <Button 
+                variant={timeframe === 'lifetime' ? 'default' : 'ghost'}
+                size="sm" 
+                className="text-xs h-7"
                 onClick={() => setTimeframe('lifetime')}
               >
                 Lifetime
-              </button>
-              <button 
-                className={`text-xs px-3 py-1 rounded ${timeframe === 'recent' ? 'bg-background shadow-sm' : ''}`}
+              </Button>
+              <Button 
+                variant={timeframe === 'recent' ? 'default' : 'ghost'}
+                size="sm" 
+                className="text-xs h-7"
                 onClick={() => setTimeframe('recent')}
               >
-                Recent Matches
-              </button>
+                Recent
+              </Button>
             </div>
           </div>
           <div className="flex items-center justify-center">
@@ -75,7 +168,7 @@ const MarvelRivalsStatsPanel = () => {
 
         <div className="bg-muted/20 p-4 rounded-md">
           <h3 className="font-semibold text-sm mb-2">MATCH STATISTICS</h3>
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-2">
             <div className="flex justify-between">
               <span className="text-xs text-muted-foreground">Matches Played</span>
               <span className="font-semibold">{stats.matchesPlayed.value}</span>
@@ -93,7 +186,7 @@ const MarvelRivalsStatsPanel = () => {
 
         <div className="bg-muted/20 p-4 rounded-md">
           <h3 className="font-semibold text-sm mb-2">CHARACTER STATS</h3>
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-2">
             <div className="flex justify-between">
               <span className="text-xs text-muted-foreground">KDA Ratio</span>
               <span className="font-semibold">{stats.kda.value}</span>
@@ -178,14 +271,12 @@ const MarvelRivalsStatsPanel = () => {
           </ResponsiveContainer>
         </div>
       </div>
+
+      <div className="mt-4">
+        {RolesPlayedTable()}
+      </div>
     </div>
   );
-};
-
-const cellStyle = {
-  border: '1px solid #ccc',
-  padding: '10px',
-  textAlign: 'center',
 };
 
 export default MarvelRivalsStatsPanel;
