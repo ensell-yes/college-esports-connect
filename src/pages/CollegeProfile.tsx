@@ -6,6 +6,7 @@ import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
 import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
 import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
 import SchedulePanel from "@/components/college/schedule/SchedulePanel";
+import SmartProspectingPanel from "@/components/college/prospecting/SmartProspectingPanel";
 import { CollegeData } from "@/components/college/types";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "./NotFound";
@@ -112,17 +113,22 @@ const CollegeProfile = () => {
             />
           )}
 
-          {/* Schedule & Results Panel (now spans 1 column) */}
+          {/* Schedule & Results Panel (spans 1 column) */}
           {isGracelandProfile && (
             <SchedulePanel 
-              className="col-span-1 mt-6" 
+              className="col-span-1" 
               initialGameType="Valorant"
             />
           )}
 
-          {/* Top Recruits Panel - only show on program-dashboard, not on college-profile-graceland */}
+          {/* Top Recruits Panel - only show on program-dashboard, spans 1 column */}
           {isProgramDashboard && !showDialog && (
-            <TopRecruitsPanel className="col-span-2" />
+            <TopRecruitsPanel className="col-span-1" />
+          )}
+          
+          {/* Smart Prospecting Panel - only show on program-dashboard, spans 1 column */}
+          {isProgramDashboard && !showDialog && (
+            <SmartProspectingPanel className="col-span-1" />
           )}
         </CollegeLayout>
       </div>
