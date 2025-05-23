@@ -19,12 +19,11 @@ const CollegeProfile = () => {
   
   // Mock college data for the profile
   const [collegeData, setCollegeData] = useState<CollegeData>({
-    id: "1",
     name: "Graceland University",
     city: "Lamoni",
     state: "Iowa",
     country: "USA",
-    logo: "/lovable-uploads/1ddc042c-abb8-49e8-89b5-44238316961e.png",
+    logo: "https://www.gujackets.com/images/setup/headshot_default.jpg?max_width=510&max_height=600",
     coverImage: "https://media.licdn.com/dms/image/v2/C561BAQEUtxn1-sABcg/company-background_10000/company-background_10000/0/1584525006592/graceland_university_cover?e=1748581200&v=beta&t=eJZZxAeDZahcO_l0Bdc8khh2jLKAYqFEYfYFAPRJHG8",
     headline: "Building champions in esports and academics",
     followers: 1245,
