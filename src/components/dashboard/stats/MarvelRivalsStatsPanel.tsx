@@ -61,7 +61,7 @@ const MarvelRivalsStatsPanel = () => {
                       <img
                         src={role.metadata.imageUrl}
                         alt={role.metadata.name}
-                        className="w-6 h-6 rounded-full bg-indigo-900"
+                        className="w-6 h-6 rounded-full bg-primary"
                       />
                       {role.metadata.name}
                     </div>
