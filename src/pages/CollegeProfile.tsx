@@ -25,20 +25,20 @@ const CollegeProfile = () => {
     state: "Iowa",
     country: "USA",
     logo: "/lovable-uploads/1ddc042c-abb8-49e8-89b5-44238316961e.png",
-    coverImage: "/lovable-uploads/9e981126-05f0-4341-b2a0-d6e95259b11a.png",
+    coverImage: "https://media.licdn.com/dms/image/v2/C561BAQEUtxn1-sABcg/company-background_10000/company-background_10000/0/1584525006592/graceland_university_cover?e=1748581200&v=beta&t=eJZZxAeDZahcO_l0Bdc8khh2jLKAYqFEYfYFAPRJHG8",
     headline: "Building champions in esports and academics",
     followers: 1245,
     overview: "Graceland University is a leading institution in collegiate esports, offering competitive gaming scholarships and state-of-the-art facilities.",
     website: "https://www.graceland.edu",
     esportsWebsite: "https://www.graceland.edu/esports",
     games: [
-      { name: "Valorant", iconUrl: "https://via.placeholder.com/30" },
-      { name: "Rocket League", iconUrl: "https://via.placeholder.com/30" },
-      { name: "League of Legends", iconUrl: "https://via.placeholder.com/30" }
+      { name: "Valorant", color: "red" },
+      { name: "Rocket League", color: "blue" },
+      { name: "League of Legends", color: "purple" }
     ],
     activelyRecruitingGames: [
-      { name: "Valorant", iconUrl: "https://via.placeholder.com/30" },
-      { name: "Rocket League", iconUrl: "https://via.placeholder.com/30" }
+      { name: "Valorant", color: "red" },
+      { name: "Rocket League", color: "blue" }
     ]
   });
 
