@@ -18,6 +18,8 @@ const CollegeProfile = () => {
   const isCollegeProfile = location.pathname === "/college-profile-graceland";
   const isProgramDashboard = location.pathname === "/program-dashboard";
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   
   // Mock college data for the profile
   const [collegeData, setCollegeData] = useState<CollegeData>({
