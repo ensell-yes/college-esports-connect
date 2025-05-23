@@ -12,6 +12,8 @@ import SchedulePanel from "@/components/college/schedule/SchedulePanel";
 import IntegratedCommPanel from "@/components/dashboard/communications/IntegratedCommPanel";
 import { CollegeData } from "@/components/college/types";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const CollegeProfile = () => {
   const location = useLocation();
