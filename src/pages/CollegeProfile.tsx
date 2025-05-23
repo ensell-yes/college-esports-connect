@@ -47,11 +47,15 @@ const CollegeProfile = () => {
   const handleUpdate = (updatedData: Partial<CollegeData>) => {
     setCollegeData(prev => ({ ...prev, ...updatedData }));
   };
-  
+
+  // Redirect to auth if not logged in
   // Scroll to top on route change
   useEffect(() => {
+    if (!user && !localStorage.getItem("demo-access-token")) {
+      navigate("/auth");
+    }
     window.scrollTo(0, 0);
-  }, [location]);
+  }, [user, navigate, location]);
 
   return (
     <div className="min-h-screen bg-gray-50">
