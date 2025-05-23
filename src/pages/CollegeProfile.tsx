@@ -51,7 +51,7 @@ const CollegeProfile = () => {
   // Redirect to auth if not logged in
   // Scroll to top on route change
   useEffect(() => {
-    if (!user && !localStorage.getItem("demo-access-token")) {
+    if (isProgramDashboard && !user && !localStorage.getItem("demo-access-token")) {
       navigate("/auth");
     }
     window.scrollTo(0, 0);
