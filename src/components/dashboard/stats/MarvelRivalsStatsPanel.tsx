@@ -32,7 +32,7 @@ const MarvelRivalsStatsPanel = () => {
   }));
 
   // Mock roles data for the roles played table
-  const mockRolesData = profileData.segments.slice(1);
+  const mockRolesData = profileData.data.segments.slice(1);
 
   const RolesPlayedTable = () => {
     return (
