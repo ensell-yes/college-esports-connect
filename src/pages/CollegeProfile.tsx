@@ -11,11 +11,13 @@ import SmartProspectingPanel from "@/components/college/prospecting/SmartProspec
 import SchedulePanel from "@/components/college/schedule/SchedulePanel";
 import IntegratedCommPanel from "@/components/dashboard/communications/IntegratedCommPanel";
 import { CollegeData } from "@/components/college/types";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CollegeProfile = () => {
   const location = useLocation();
   const isCollegeProfile = location.pathname === "/college-profile-graceland";
   const isProgramDashboard = location.pathname === "/program-dashboard";
+  const isMobile = useIsMobile();
   
   // Mock college data for the profile
   const [collegeData, setCollegeData] = useState<CollegeData>({
@@ -72,8 +74,8 @@ const CollegeProfile = () => {
             <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} className="col-span-1 md:col-span-2" />
             <TopRecruitsPanel />
             <SmartProspectingPanel />
-            <PipelinePanel />
-            <IntegratedCommPanel />
+            <PipelinePanel className="col-span-1 md:col-span-2" />
+            <IntegratedCommPanel className="col-span-1 md:col-span-2" />
           </div>
         )}
       </div>
