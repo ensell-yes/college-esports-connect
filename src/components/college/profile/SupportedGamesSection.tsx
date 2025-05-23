@@ -110,14 +110,8 @@ const SupportedGamesSection = ({ games, onUpdate }: SupportedGamesSectionProps) 
                           checked={isSelected}
                           onCheckedChange={() => toggleGame(game)}
                         />
-                        <label 
-                          htmlFor={`game-${game.name}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer flex-1"
-                        >
-                          {game.name}
-                        </label>
                         <Badge className={game.color.split(' ')[0]}>
-                          Sample
+                          {game.name}
                         </Badge>
                       </div>
                     );
