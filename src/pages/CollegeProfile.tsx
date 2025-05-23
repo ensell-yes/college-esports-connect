@@ -122,7 +122,7 @@ const CollegeProfile = () => {
 
           {/* Top Recruits Panel - only show on program-dashboard, not on college-profile-graceland */}
           {isProgramDashboard && !showDialog && (
-            <TopRecruitsPanel className="col-span-1 mt-6" />
+            <TopRecruitsPanel className="col-span-2" />
           )}
         </CollegeLayout>
       </div>
