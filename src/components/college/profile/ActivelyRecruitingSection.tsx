@@ -82,14 +82,8 @@ const ActivelyRecruitingSection = ({ games = [], onUpdate }: ActivelyRecruitingS
                           checked={isSelected}
                           onCheckedChange={() => toggleGame(game)}
                         />
-                        <label 
-                          htmlFor={`recruiting-game-${game.name}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer flex-1"
-                        >
-                          {game.name}
-                        </label>
                         <Badge className={game.color.split(' ')[0]}>
-                          Sample
+                          {game.name}
                         </Badge>
                       </div>
                     );
