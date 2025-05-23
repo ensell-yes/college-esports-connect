@@ -32,44 +32,7 @@ const MarvelRivalsStatsPanel = () => {
   }));
 
   // Mock roles data for the roles played table
-  const mockRolesData = [
-    {
-      attributes: { roleId: "assault" },
-      metadata: { name: "Assault", imageUrl: "https://via.placeholder.com/24" },
-      stats: {
-        matchesPlayed: { value: 38 },
-        winRate: { value: 52.6 },
-        kills: { value: 356 },
-        deaths: { value: 292 },
-        assists: { value: 178 },
-        kda: { value: 1.83 }
-      }
-    },
-    {
-      attributes: { roleId: "tank" },
-      metadata: { name: "Tank", imageUrl: "https://via.placeholder.com/24" },
-      stats: {
-        matchesPlayed: { value: 22 },
-        winRate: { value: 59.1 },
-        kills: { value: 176 },
-        deaths: { value: 204 },
-        assists: { value: 213 },
-        kda: { value: 1.91 }
-      }
-    },
-    {
-      attributes: { roleId: "support" },
-      metadata: { name: "Support", imageUrl: "https://via.placeholder.com/24" },
-      stats: {
-        matchesPlayed: { value: 14 },
-        winRate: { value: 42.9 },
-        kills: { value: 89 },
-        deaths: { value: 112 },
-        assists: { value: 276 },
-        kda: { value: 3.26 }
-      }
-    }
-  ];
+  const mockRolesData = profileData.segments.slice(1);
 
   const RolesPlayedTable = () => {
     return (
