@@ -104,20 +104,24 @@ const CollegeProfile = () => {
           />
           
           {/* Overview Panel (spans across both columns) */}
-          <CollegeOverviewPanel 
-            className="col-span-2" 
-            college={collegeData} 
-            onUpdate={handleUpdateCollege} 
-          />
+          {isGracelandProfile && (
+            <CollegeOverviewPanel 
+              className="col-span-2" 
+              college={collegeData} 
+              onUpdate={handleUpdateCollege} 
+            />
+          )}
 
           {/* Schedule & Results Panel (now spans 1 column) */}
-          <SchedulePanel 
-            className="col-span-1 mt-6" 
-            initialGameType="Valorant"
-          />
+          {isGracelandProfile && (
+            <SchedulePanel 
+              className="col-span-1 mt-6" 
+              initialGameType="Valorant"
+            />
+          )}
 
           {/* Top Recruits Panel - only show on program-dashboard, not on college-profile-graceland */}
-          {!isGracelandProfile && !showDialog && (
+          {isProgramDashboard && !showDialog && (
             <TopRecruitsPanel className="col-span-1 mt-6" />
           )}
         </CollegeLayout>
