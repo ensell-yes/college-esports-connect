@@ -138,7 +138,7 @@ const SupportedGamesSection = ({ games, onUpdate }: SupportedGamesSectionProps) 
       </div>
       <div className="flex flex-wrap gap-2">
         {(games || []).map((game) => (
-          <Badge key={game.name} className={game.color}>
+          <Badge key={game.name} className={`${game.color} hover:${game.color} text-white cursor-pointer`}>
             {game.name}
           </Badge>
         ))}
