@@ -9,7 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const IntegratedCommPanel = () => {
+interface IntegratedCommPanelProps {
+  className?: string;
+}
+
+const IntegratedCommPanel = ({ className = "" }: IntegratedCommPanelProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [activeTab, setActiveTab] = useState("calendar");
   
@@ -69,7 +73,7 @@ const IntegratedCommPanel = () => {
   ];
 
   return (
-    <Card className="col-span-1 shadow-md">
+    <Card className={`col-span-1 shadow-md ${className}`}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-xl font-bold">Communications Hub</CardTitle>
