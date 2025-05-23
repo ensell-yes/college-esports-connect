@@ -32,13 +32,13 @@ const CollegeProfile = () => {
     website: "https://www.graceland.edu",
     esportsWebsite: "https://www.graceland.edu/esports",
     games: [
-      { id: "1", name: "Valorant", iconUrl: "https://via.placeholder.com/30" },
-      { id: "2", name: "Rocket League", iconUrl: "https://via.placeholder.com/30" },
-      { id: "3", name: "League of Legends", iconUrl: "https://via.placeholder.com/30" }
+      { name: "Valorant", iconUrl: "https://via.placeholder.com/30" },
+      { name: "Rocket League", iconUrl: "https://via.placeholder.com/30" },
+      { name: "League of Legends", iconUrl: "https://via.placeholder.com/30" }
     ],
     activelyRecruitingGames: [
-      { id: "1", name: "Valorant", iconUrl: "https://via.placeholder.com/30" },
-      { id: "2", name: "Rocket League", iconUrl: "https://via.placeholder.com/30" }
+      { name: "Valorant", iconUrl: "https://via.placeholder.com/30" },
+      { name: "Rocket League", iconUrl: "https://via.placeholder.com/30" }
     ]
   });
 
@@ -60,22 +60,23 @@ const CollegeProfile = () => {
           {isCollegeProfile ? "College Profile" : "Program Dashboard"}
         </h1>
         
-        <CollegeLayout>
-          {isCollegeProfile ? (
-            <>
-              <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} />
-              <TopRecruitsPanel />
-              <CollegeOverviewPanel college={collegeData} onUpdate={handleUpdate} />
-            </>
-          ) : (
-            <>
-              <PipelinePanel />
-              <SmartProspectingPanel />
-              <SchedulePanel />
-              <IntegratedCommPanel />
-            </>
-          )}
-        </CollegeLayout>
+        {isCollegeProfile ? (
+          // College Profile Layout
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} className="col-span-1 md:col-span-2" />
+            <TopRecruitsPanel />
+            <CollegeOverviewPanel college={collegeData} onUpdate={handleUpdate} />
+          </div>
+        ) : (
+          // Program Dashboard Layout with the new requirements
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} className="col-span-1 md:col-span-2" />
+            <TopRecruitsPanel />
+            <SmartProspectingPanel />
+            <PipelinePanel />
+            <IntegratedCommPanel />
+          </div>
+        )}
       </div>
     </div>
   );
