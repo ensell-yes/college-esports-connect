@@ -7,6 +7,7 @@ import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
 import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
 import SchedulePanel from "@/components/college/schedule/SchedulePanel";
 import SmartProspectingPanel from "@/components/college/prospecting/SmartProspectingPanel";
+import PipelinePanel from "@/components/college/pipeline/PipelinePanel";
 import { CollegeData } from "@/components/college/types";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "./NotFound";
@@ -129,6 +130,11 @@ const CollegeProfile = () => {
           {/* Smart Prospecting Panel - only show on program-dashboard, spans 1 column */}
           {isProgramDashboard && !showDialog && (
             <SmartProspectingPanel className="col-span-1" />
+          )}
+          
+          {/* Pipeline Panel - only show on program-dashboard, spans 2 columns */}
+          {isProgramDashboard && !showDialog && (
+            <PipelinePanel className="col-span-2" />
           )}
         </CollegeLayout>
       </div>
