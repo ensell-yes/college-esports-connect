@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import Demo from "./pages/Demo";
 import Dashboard from "./pages/Dashboard";
 import CollegeProfile from "./pages/CollegeProfile";
+import PolicyManagement from "./pages/PolicyManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/player-dashboard" element={<Dashboard />} />
             <Route path="/college-profile-graceland" element={<CollegeProfile />} />
             <Route path="/program-dashboard" element={<CollegeProfile />} />
+            <Route path="/policy-management" element={<PolicyManagement />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
