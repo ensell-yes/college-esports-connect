@@ -108,6 +108,7 @@ const Auth = () => {
 
   // Handle registration with Supabase
   const handleRegister = async (values: RegisterFormValues) => {
+    console.log("Form values: " + values)
     try {
       setIsLoading(true);
       setAuthError(null);
