@@ -37,7 +37,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
   const showEditButton = hasDemoAccess();
 
   const navButton = (pageType: string) => {
-    if pageType == "profile" {
+    if (pageType == "profile") {
       return (
         <Link to="/program-dashboard">
           <Button 
@@ -60,7 +60,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
         </Link>
       )
     }
-  }
+  };
 
   return (
     <div className="relative h-48 overflow-hidden">
