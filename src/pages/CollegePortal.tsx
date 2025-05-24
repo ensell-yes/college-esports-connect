@@ -48,6 +48,7 @@ const CollegePortal = () => {
             className="col-span-2" 
             college={collegeData} 
             onUpdate={handleUpdateCollege} 
+            pageType="profile"
           />
           
           {/* Overview Panel (spans across both columns) */}
