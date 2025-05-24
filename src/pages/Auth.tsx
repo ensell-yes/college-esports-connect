@@ -111,7 +111,7 @@ const Auth = () => {
     try {
       setIsLoading(true);
       setAuthError(null);
-
+      console.log(values)
       const { error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
