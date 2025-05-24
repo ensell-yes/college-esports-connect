@@ -63,7 +63,7 @@ const Auth = () => {
       password: "",
       confirmPassword: "",
     },
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   // Login form
@@ -73,7 +73,7 @@ const Auth = () => {
       email: "",
       password: "",
     },
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   // Toggle between login and registration forms
