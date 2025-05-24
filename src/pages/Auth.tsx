@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -64,6 +63,7 @@ const Auth = () => {
       password: "",
       confirmPassword: "",
     },
+    mode: "onChange",
   });
 
   // Login form
@@ -73,6 +73,7 @@ const Auth = () => {
       email: "",
       password: "",
     },
+    mode: "onChange",
   });
 
   // Toggle between login and registration forms
@@ -80,6 +81,11 @@ const Auth = () => {
     console.log("Toggling form: " + isLogin)
     setIsLogin(!isLogin);
     setAuthError(null);
+    // Reset both forms when toggling
+    registerForm.reset();
+    loginForm.reset();
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   };
 
   // Handle login with Supabase
@@ -125,8 +131,6 @@ const Auth = () => {
       });
 
       if (error) {
-        console.log("Register form errors:", registerForm.formState.errors);
-        console.log("Login form errors:", loginForm.formState.errors);
         setAuthError(error.message);
         return;
       }
@@ -270,7 +274,6 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          id="email"
                           placeholder="Email"
                           type="email"
                           disabled={isLoading}
@@ -294,7 +297,6 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          id="password"
                           placeholder="Password"
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
@@ -329,7 +331,6 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          id="confirmPassword"
                           placeholder="Confirm Password"
                           type={showConfirmPassword ? "text" : "password"}
                           disabled={isLoading}
