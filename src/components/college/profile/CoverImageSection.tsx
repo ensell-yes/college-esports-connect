@@ -88,6 +88,17 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
             <RecruitingForm collegeName={collegeName} />
           </SheetContent>
         </Sheet>
+
+        {showEditButton && (
+          <Link to="/program-dashboard">
+            <Button 
+              size="sm"
+              className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+            >
+              Program Dashboard
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );
