@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import RecruitingForm from "./RecruitingForm";
-import { Link } from "react-router-dom";
 
 interface CoverImageSectionProps {
   coverImage: string;
@@ -51,7 +50,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
       )
     } else {
       return (
-        <Link to="/college-profile">
+        <Link to="/college-profile-graceland">
           <Button 
             size="sm"
             className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
