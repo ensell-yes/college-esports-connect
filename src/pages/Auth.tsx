@@ -77,10 +77,9 @@ const Auth = () => {
 
   // Toggle between login and registration forms
   const toggleForm = () => {
+    console.log("Toggling form: " + isLogin)
     setIsLogin(!isLogin);
     setAuthError(null);
-    registerForm.reset();
-    loginForm.reset();
   };
 
   // Handle login with Supabase
@@ -271,6 +270,7 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          id="email"
                           placeholder="Email"
                           type="email"
                           disabled={isLoading}
@@ -294,6 +294,7 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          id="password"
                           placeholder="Password"
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
@@ -328,6 +329,7 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          id="confirmPassword"
                           placeholder="Confirm Password"
                           type={showConfirmPassword ? "text" : "password"}
                           disabled={isLoading}
