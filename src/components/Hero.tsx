@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Trophy } from "lucide-react";
+import { Link } from "react-router-dom";
+
 const Hero = () => {
   return <div className="relative pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-esports-purple/10 to-esports-teal/10">
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-grid-pattern grid-background opacity-30"></div>
@@ -67,7 +69,7 @@ const Hero = () => {
                   <span className="px-2 py-1 bg-esports-orange/10 rounded-full text-xs text-esports-orange">Rocket League</span>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
-                  <Button variant="outline" size="sm" className="text-xs">View Profile</Button>
+                  <Link to="/college-profile-graceland"><Button variant="outline" size="sm" className="text-xs">View Profile</Button></Link>
                   <p className="text-xs text-gray-500">4 Scholarships Available</p>
                 </div>
               </div>
