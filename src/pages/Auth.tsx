@@ -284,6 +284,7 @@ const Auth = () => {
                           type="email"
                           disabled={isLoading}
                           className="pl-10"
+                          onChange={(e) => setValue(e.target.value)}
                         />
                         <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       </div>
@@ -307,6 +308,7 @@ const Auth = () => {
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
                           className="pl-10"
+                          onChange={(e) => setValue(e.target.value)}
                         />
                         <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                         <button
@@ -341,6 +343,7 @@ const Auth = () => {
                           type={showConfirmPassword ? "text" : "password"}
                           disabled={isLoading}
                           className="pl-10"
+                          onChange={(e) => setValue(e.target.value)}
                         />
                         <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                         <button
