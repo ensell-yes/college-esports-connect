@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AppRole, Tenant, PolicyDefinition } from "@/types/roles";
+import { AppRole, PolicyDefinition } from "@/types/roles";
 
 const roles: AppRole[] = [
   'Player', 'Parent', 'PrivateCoach', 'ProgramStaff', 'ProgramAdmin', 
@@ -44,13 +44,11 @@ const policyFormSchema = z.object({
   table_name: z.string().min(1, "Table name is required"),
   action: z.string().min(1, "Action is required"),
   condition: z.string().optional(),
-  tenant_scope: z.string().optional(),
 });
 
 type PolicyFormValues = z.infer<typeof policyFormSchema>;
 
 interface PolicyFormProps {
-  tenants: Tenant[];
   isGlobalAdmin: boolean;
   initialData?: PolicyDefinition | null;
   onSubmit: (data: Omit<PolicyDefinition, 'id' | 'created_by' | 'created_at' | 'updated_at'>) => void;
@@ -58,7 +56,6 @@ interface PolicyFormProps {
 }
 
 export const PolicyForm: React.FC<PolicyFormProps> = ({
-  tenants,
   isGlobalAdmin,
   initialData,
   onSubmit,
@@ -73,7 +70,6 @@ export const PolicyForm: React.FC<PolicyFormProps> = ({
       table_name: initialData?.table_name || "",
       action: initialData?.action || "",
       condition: initialData?.condition || "",
-      tenant_scope: initialData?.tenant_scope || "",
     },
   });
 
@@ -85,7 +81,6 @@ export const PolicyForm: React.FC<PolicyFormProps> = ({
       table_name: values.table_name,
       action: values.action,
       condition: values.condition,
-      tenant_scope: values.tenant_scope || undefined,
     });
   };
 
@@ -201,37 +196,6 @@ export const PolicyForm: React.FC<PolicyFormProps> = ({
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="tenant_scope"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tenant Scope</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select tenant scope" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="">Global (All Tenants)</SelectItem>
-                    {tenants.map((tenant) => (
-                      <SelectItem key={tenant.id} value={tenant.id}>
-                        {tenant.name} ({tenant.type})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormDescription>
-                  {isGlobalAdmin 
-                    ? "Select specific tenant or leave blank for global access"
-                    : "Limited to your tenant scope"
-                  }
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
 
         <FormField
