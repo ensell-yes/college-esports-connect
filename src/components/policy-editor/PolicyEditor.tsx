@@ -11,7 +11,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 
 export const PolicyEditor = () => {
   const {
-    tenants,
     policies,
     loading,
     hasGlobalAccess,
@@ -82,7 +81,7 @@ export const PolicyEditor = () => {
             <div>
               <CardTitle>Policy Editor</CardTitle>
               <CardDescription>
-                Manage Row-Level Security policies for your {isGlobalAdmin ? 'organization' : 'tenant'}
+                Manage Row-Level Security policies for your esports recruiting platform
               </CardDescription>
             </div>
             <Button onClick={() => setShowForm(true)}>
@@ -94,7 +93,6 @@ export const PolicyEditor = () => {
         <CardContent>
           <PolicyTable
             policies={policies}
-            tenants={tenants}
             isGlobalAdmin={isGlobalAdmin}
             onEdit={handleEditPolicy}
             onDelete={handleDeletePolicy}
@@ -110,7 +108,6 @@ export const PolicyEditor = () => {
             </DialogTitle>
           </DialogHeader>
           <PolicyForm
-            tenants={tenants}
             isGlobalAdmin={isGlobalAdmin}
             initialData={editingPolicy}
             onSubmit={editingPolicy ? handleUpdatePolicy : handleCreatePolicy}

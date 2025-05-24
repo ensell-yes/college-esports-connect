@@ -11,11 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Trash2 } from "lucide-react";
-import { PolicyDefinition, Tenant } from "@/types/roles";
+import { PolicyDefinition } from "@/types/roles";
 
 interface PolicyTableProps {
   policies: PolicyDefinition[];
-  tenants: Tenant[];
   isGlobalAdmin: boolean;
   onEdit: (policy: PolicyDefinition) => void;
   onDelete: (id: string) => void;
@@ -23,17 +22,10 @@ interface PolicyTableProps {
 
 export const PolicyTable: React.FC<PolicyTableProps> = ({
   policies,
-  tenants,
   isGlobalAdmin,
   onEdit,
   onDelete
 }) => {
-  const getTenantName = (tenantId?: string) => {
-    if (!tenantId) return "Global";
-    const tenant = tenants.find(t => t.id === tenantId);
-    return tenant ? tenant.name : "Unknown";
-  };
-
   const getRoleColor = (role: string) => {
     if (role.includes('Admin')) return 'destructive';
     if (role.includes('Developer')) return 'secondary';
@@ -62,7 +54,6 @@ export const PolicyTable: React.FC<PolicyTableProps> = ({
             <TableHead>Role</TableHead>
             <TableHead>Table</TableHead>
             <TableHead>Action</TableHead>
-            <TableHead>Tenant Scope</TableHead>
             <TableHead>Condition</TableHead>
             <TableHead className="w-[100px]">Actions</TableHead>
           </TableRow>
@@ -70,7 +61,7 @@ export const PolicyTable: React.FC<PolicyTableProps> = ({
         <TableBody>
           {policies.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={8} className="text-center py-4">
+              <TableCell colSpan={7} className="text-center py-4">
                 No policies found
               </TableCell>
             </TableRow>
@@ -96,11 +87,6 @@ export const PolicyTable: React.FC<PolicyTableProps> = ({
                 <TableCell>
                   <Badge variant={getActionColor(policy.action)}>
                     {policy.action}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline">
-                    {getTenantName(policy.tenant_scope)}
                   </Badge>
                 </TableCell>
                 <TableCell className="max-w-[300px] truncate">

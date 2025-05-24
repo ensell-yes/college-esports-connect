@@ -2,23 +2,21 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { AppRole, Tenant, UserRole, PolicyDefinition } from "@/types/roles";
+import { AppRole, UserRole, PolicyDefinition } from "@/types/roles";
 import { toast } from "@/components/ui/use-toast";
 
 export const useRoleManagement = () => {
   const { user } = useAuth();
   const [userRoles, setUserRoles] = useState<UserRole[]>([]);
-  const [tenants, setTenants] = useState<Tenant[]>([]);
   const [policies, setPolicies] = useState<PolicyDefinition[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Check if current user has admin privileges
-  const hasAdminAccess = async (tenantId?: string): Promise<boolean> => {
+  const hasAdminAccess = async (): Promise<boolean> => {
     if (!user) return false;
     
     const { data, error } = await supabase.rpc('auth_has_admin_role', {
-      _user_id: user.id,
-      _tenant_id: tenantId || null
+      _user_id: user.id
     });
     
     if (error) {
@@ -46,27 +44,7 @@ export const useRoleManagement = () => {
     return yesAdminData || yesDeveloperData || false;
   };
 
-  // Fetch tenants
-  const fetchTenants = async () => {
-    const { data, error } = await supabase
-      .from('tenants')
-      .select('*')
-      .order('name');
-    
-    if (error) {
-      console.error('Error fetching tenants:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch tenants",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setTenants(data || []);
-  };
-
-  // Fetch policies based on user permissions
+  // Fetch policies
   const fetchPolicies = async () => {
     const { data, error } = await supabase
       .from('policy_definitions')
@@ -174,10 +152,7 @@ export const useRoleManagement = () => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      await Promise.all([
-        fetchTenants(),
-        fetchPolicies()
-      ]);
+      await fetchPolicies();
       setLoading(false);
     };
 
@@ -188,7 +163,6 @@ export const useRoleManagement = () => {
 
   return {
     userRoles,
-    tenants,
     policies,
     loading,
     hasAdminAccess,
