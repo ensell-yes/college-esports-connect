@@ -11,10 +11,11 @@ import ActivelyRecruitingSection from "./profile/ActivelyRecruitingSection";
 interface CollegeProfilePanelProps {
   college: CollegeData;
   onUpdate: (updatedData: Partial<CollegeData>) => void;
+  pageType: string;
   className?: string;
 }
 
-const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfilePanelProps) => {
+const CollegeProfilePanel = ({ college, onUpdate, pageType, className = "" }: CollegeProfilePanelProps) => {
   // Handler functions
   const handleHeadlineUpdate = (headline: string) => {
     onUpdate({ headline });
@@ -43,6 +44,7 @@ const CollegeProfilePanel = ({ college, onUpdate, className = "" }: CollegeProfi
         coverImage={college.coverImage}
         collegeName={college.name}
         onUpdate={handleCoverImageUpdate}
+        pageType={pageType}
       />
       
       <CardContent className="pt-0">

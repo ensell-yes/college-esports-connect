@@ -7,15 +7,15 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import RecruitingForm from "./RecruitingForm";
-import { Link } from "react-router-dom";
 
 interface CoverImageSectionProps {
   coverImage: string;
   collegeName: string;
   onUpdate: (base64data: string) => void;
+  pageType: string;
 }
 
-const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName, onUpdate }) => {
+const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName, onUpdate, pageType }) => {
   const { hasDemoAccess } = useAuth();
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -35,6 +35,32 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
   };
 
   const showEditButton = hasDemoAccess();
+
+  const navButton = (pageType: string) => {
+    if pageType == "profile" {
+      return (
+        <Link to="/program-dashboard">
+          <Button 
+            size="sm"
+            className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+          >
+            View Dashboard
+          </Button>
+        </Link>
+      )
+    } else {
+      return (
+        <Link to="/college-profile">
+          <Button 
+            size="sm"
+            className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+          >
+           View Profile
+          </Button>
+        </Link>
+      )
+    }
+  }
 
   return (
     <div className="relative h-48 overflow-hidden">
@@ -90,16 +116,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
           </SheetContent>
         </Sheet>
 
-        {showEditButton && (
-          <Link to="/program-dashboard">
-            <Button 
-              size="sm"
-              className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
-            >
-              Program Dashboard
-            </Button>
-          </Link>
-        )}
+        {showEditButton && navButton(pageType)}
       </div>
     </div>
   );
