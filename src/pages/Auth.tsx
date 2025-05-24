@@ -83,6 +83,8 @@ const Auth = () => {
 
   // Handle login with Supabase
   const handleLogin = async (values: LoginFormValues) => {
+    console.log("Handling login form")
+    
     try {
       setIsLoading(true);
       setAuthError(null);
@@ -108,11 +110,11 @@ const Auth = () => {
 
   // Handle registration with Supabase
   const handleRegister = async (values: RegisterFormValues) => {
-    console.log("Form values: " + values)
+    console.log("Handling register form")
     try {
       setIsLoading(true);
       setAuthError(null);
-      console.log(values)
+
       const { error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
@@ -122,6 +124,8 @@ const Auth = () => {
       });
 
       if (error) {
+        console.log("Register form errors:", registerForm.formState.errors);
+        console.log("Login form errors:", loginForm.formState.errors);
         setAuthError(error.message);
         return;
       }
