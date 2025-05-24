@@ -21,10 +21,12 @@ const Hero = () => {
             <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl">Connect high school and community college gamers with coaches and four-year college programs. Showcase your skills, discover opportunities, and make your mark in collegiate esports.</p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-esports-purple hover:bg-esports-purple/90 text-white px-8 py-6">
-                Get Started 
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link to="/demo">
+                <Button size="lg" className="bg-esports-purple hover:bg-esports-purple/90 text-white px-8 py-6">
+                  Get Started 
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
               <Button size="lg" variant="outline" className="border-esports-purple text-esports-purple hover:bg-esports-purple/10 px-8 py-6">
                 Learn More
               </Button>
