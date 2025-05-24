@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import RecruitingForm from "./RecruitingForm";
+import { Link } from "react-router-dom";
 
 interface CoverImageSectionProps {
   coverImage: string;
