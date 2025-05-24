@@ -51,7 +51,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
       )
     } else {
       return (
-        <Link to="/college-profile">
+        <Link to="/college-profile-graceland">
           <Button 
             size="sm"
             className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
