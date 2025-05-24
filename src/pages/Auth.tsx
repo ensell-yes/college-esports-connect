@@ -78,12 +78,18 @@ const Auth = () => {
 
   // Toggle between login and registration forms
   const toggleForm = () => {
-    console.log("Toggling form: " + isLogin)
-    setIsLogin(!isLogin);
+    setIsLogin((prev) => !prev);
     setAuthError(null);
-    // Reset both forms when toggling
-    registerForm.reset();
-    loginForm.reset();
+    setIsLoading(false); // <-- Fix: ensure fields are enabled
+    registerForm.reset({
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+    loginForm.reset({
+      email: "",
+      password: "",
+    });
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
