@@ -79,6 +79,8 @@ const Auth = () => {
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setAuthError(null);
+    registerForm.reset();
+    loginForm.reset();
   };
 
   // Handle login with Supabase
