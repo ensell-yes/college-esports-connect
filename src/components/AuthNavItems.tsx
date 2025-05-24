@@ -20,7 +20,7 @@ export const AuthNavItems = () => {
       <div className="flex items-center gap-3">
         <span className="hidden md:inline text-sm text-gray-600">
           <Link to="/player-dashboard">
-            {user.email}
+            <Button className="bg-esports-purple hover:bg-esports-purple/80">{user.email}</Button>
           </Link>
         </span>
         <Button variant="outline" onClick={signOut}>
