@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/sonner";
+import { loginSchema, registerSchema } from "@/components/auth/schema";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,31 +20,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-// Password validation schema
-const passwordSchema = z
-  .string()
-  .min(8, { message: "Password must be at least 8 characters" })
-  .regex(/[0-9]/, { message: "Password must contain at least one number" })
-  .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-  .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-  .regex(/[^A-Za-z0-9]/, { message: "Password must contain at least one special character" });
-
-// Form schema for registration
-const registerSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: passwordSchema,
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
-
-// Form schema for login
-const loginSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(1, { message: "Password is required" }),
-});
-
 type RegisterFormValues = z.infer<typeof registerSchema>;
 type LoginFormValues = z.infer<typeof loginSchema>;
 
@@ -54,6 +30,19 @@ const Auth = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const authForm = useForm<any>({
+    resolver: async (data, context, options) => {
+      const schema = isLogin ? loginSchema : registerSchema;
+      return zodResolver(schema)(data, context, options);
+    },
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    mode: "onSubmit",
+  });
 
   // Register form
   const registerForm = useForm<RegisterFormValues>({
@@ -85,16 +74,8 @@ const Auth = () => {
   const toggleForm = () => {
     setIsLogin((prev) => !prev);
     setAuthError(null);
-    setIsLoading(false); // <-- Fix: ensure fields are enabled
-    // registerForm.reset({
-    //   email: "",
-    //   password: "",
-    //   confirmPassword: "",
-    // });
-    // loginForm.reset({
-    //   email: "",
-    //   password: "",
-    // });
+    setIsLoading(false);
+    authForm.reset(); // Reset shared form state
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
@@ -203,137 +184,71 @@ const Auth = () => {
           </Alert>
         )}
 
-        {isLogin ? (
-          <Form {...loginForm}>
-            <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-6">
-              <FormField
-                control={loginForm.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email address</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          placeholder="Email"
-                          type="email"
-                          disabled={isLoading}
-                          className="pl-10"
-                        />
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <Form {...authForm}>
+          <form
+            onSubmit={authForm.handleSubmit(isLogin ? handleLogin : handleRegister)}
+            className="space-y-6"
+          >
+            <FormField
+              control={authForm.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        placeholder="Enter your email"
+                        type="email"
+                        disabled={isLoading}
+                        className="pl-10"
+                      />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={loginForm.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          placeholder="Password"
-                          type={showPassword ? "text" : "password"}
-                          disabled={isLoading}
-                          className="pl-10"
-                        />
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                        <button
-                          type="button"
-                          className="absolute right-3 top-3"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4 text-gray-400" />
-                          ) : (
-                            <Eye className="h-4 w-4 text-gray-400" />
-                          )}
-                        </button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <FormField
+              control={authForm.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        placeholder="Enter your password"
+                        type={showPassword ? "text" : "password"}
+                        disabled={isLoading}
+                        className="pl-10"
+                      />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-3"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-gray-400" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-400" />
+                        )}
+                      </button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <Button
-                type="submit"
-                className="w-full bg-esports-purple hover:bg-esports-purple/80"
-                disabled={isLoading}
-              >
-                {isLoading ? "Signing in..." : "Sign in"}
-              </Button>
-            </form>
-          </Form>
-        ) : (
-          <Form {...registerForm}>
-            <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-6">
+            {!isLogin && (
               <FormField
-                control={registerForm.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email address</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          placeholder="Email"
-                          type="email"
-                          disabled={isLoading}
-                          className="pl-10"
-                        />
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={registerForm.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          placeholder="Password"
-                          type={showPassword ? "text" : "password"}
-                          disabled={isLoading}
-                          className="pl-10"
-                        />
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                        <button
-                          type="button"
-                          className="absolute right-3 top-3"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4 text-gray-400" />
-                          ) : (
-                            <Eye className="h-4 w-4 text-gray-400" />
-                          )}
-                        </button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={registerForm.control}
+                control={authForm.control}
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
@@ -342,7 +257,7 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          placeholder="Confirm Password"
+                          placeholder="Confirm your password"
                           type={showConfirmPassword ? "text" : "password"}
                           disabled={isLoading}
                           className="pl-10"
@@ -365,17 +280,17 @@ const Auth = () => {
                   </FormItem>
                 )}
               />
+            )}
 
-              <Button
-                type="submit"
-                className="w-full bg-esports-purple hover:bg-esports-purple/80"
-                disabled={isLoading}
-              >
-                {isLoading ? "Registering..." : "Register"}
-              </Button>
-            </form>
-          </Form>
-        )}
+            <Button
+              type="submit"
+              className="w-full bg-esports-purple hover:bg-esports-purple/80"
+              disabled={isLoading}
+            >
+              {isLogin ? "Login" : "Register"}
+            </Button>
+          </form>
+        </Form>
 
         <div className="mt-6">
           <div className="relative">
