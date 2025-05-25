@@ -40,8 +40,8 @@ const registerSchema = z.object({
 
 // Form schema for login
 const loginSchema = z.object({
-  loginEmail: z.string().email({ message: "Please enter a valid email address" }),
-  loginPassword: z.string().min(1, { message: "Password is required" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -59,6 +59,7 @@ const Auth = () => {
   const registerForm = useForm<RegisterFormValues>({
     // resolver: zodResolver(registerSchema),
     resolver: async (data, context, options) => {
+      console.log("values", getValues())
       console.log("formdata", data)
       console.log("validation result", await zodResolver(registerSchema)(data, context, options))
       return zodResolver(registerSchema)(data, context, options)
@@ -75,8 +76,8 @@ const Auth = () => {
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      loginEmail: "",
-      loginPassword: "",
+      email: "",
+      password: "",
     },
     mode: "onSubmit",
   });
@@ -108,8 +109,8 @@ const Auth = () => {
       setAuthError(null);
 
       const { error } = await supabase.auth.signInWithPassword({
-        email: values.loginEmail,
-        password: values.loginPassword,
+        email: values.email,
+        password: values.password,
       });
 
       if (error) {
@@ -208,7 +209,7 @@ const Auth = () => {
             <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-6">
               <FormField
                 control={loginForm.control}
-                name="loginEmail"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email address</FormLabel>
@@ -231,7 +232,7 @@ const Auth = () => {
 
               <FormField
                 control={loginForm.control}
-                name="loginPassword"
+                name="password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
@@ -285,7 +286,6 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          {registerForm.register("email")}
                           placeholder="Email"
                           type="email"
                           disabled={isLoading}
@@ -309,7 +309,6 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          {registerForm.register("password")}
                           placeholder="Password"
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
