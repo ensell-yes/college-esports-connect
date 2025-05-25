@@ -71,7 +71,7 @@ const WebsitesSection: FC<WebsitesSectionProps> = ({ website, esportsWebsite, on
 
   const displayUrl = (url: string) => {
     try {
-      return new formatUrl(url);
+      return formatUrl(url);
     } catch (e) {
       return url;
     }
