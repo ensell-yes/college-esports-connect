@@ -73,7 +73,7 @@ const CollegeProfile = () => {
           // College Profile Layout
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} pageType="profile" className="col-span-1 md:col-span-2" />
-            <TopRecruitsPanel />
+            <SchedulePanel className="col-span-1" initialGameType="Valorant" />
             <CollegeOverviewPanel college={collegeData} onUpdate={handleUpdate} />
           </div>
         ) : (
