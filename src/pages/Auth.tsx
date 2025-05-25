@@ -269,7 +269,7 @@ const Auth = () => {
           </Form>
         ) : (
           <Form {...registerForm}>
-            <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-6">
+            <form onSubmit={registerForm.handleSubmit((d) => console.log(d))} className="space-y-6">
               <FormField
                 control={registerForm.control}
                 name="email"
