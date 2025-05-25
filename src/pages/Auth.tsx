@@ -40,8 +40,8 @@ const registerSchema = z.object({
 
 // Form schema for login
 const loginSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(1, { message: "Password is required" }),
+  loginEmail: z.string().email({ message: "Please enter a valid email address" }),
+  loginPassword: z.string().min(1, { message: "Password is required" }),
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -75,8 +75,8 @@ const Auth = () => {
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      loginEmail: "",
+      loginPassword: "",
     },
     mode: "onSubmit",
   });
@@ -108,8 +108,8 @@ const Auth = () => {
       setAuthError(null);
 
       const { error } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
+        email: values.loginEmail,
+        password: values.loginPassword,
       });
 
       if (error) {
@@ -208,7 +208,7 @@ const Auth = () => {
             <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-6">
               <FormField
                 control={loginForm.control}
-                name="email"
+                name="loginEmail"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email address</FormLabel>
@@ -231,7 +231,7 @@ const Auth = () => {
 
               <FormField
                 control={loginForm.control}
-                name="password"
+                name="loginPassword"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
