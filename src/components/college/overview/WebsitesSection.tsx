@@ -71,10 +71,7 @@ const WebsitesSection: FC<WebsitesSectionProps> = ({ website, esportsWebsite, on
 
   const displayUrl = (url: string) => {
     try {
-      if (url.includes('gujackets.com')) {
-        return 'gujackets.com/sports/esports';
-      }
-      return new URL(formatUrl(url)).hostname;
+      return new formatUrl(url);
     } catch (e) {
       return url;
     }
