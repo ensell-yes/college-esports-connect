@@ -81,15 +81,15 @@ const Auth = () => {
     setIsLogin((prev) => !prev);
     setAuthError(null);
     setIsLoading(false); // <-- Fix: ensure fields are enabled
-    registerForm.reset({
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    loginForm.reset({
-      email: "",
-      password: "",
-    });
+    // registerForm.reset({
+    //   email: "",
+    //   password: "",
+    //   confirmPassword: "",
+    // });
+    // loginForm.reset({
+    //   email: "",
+    //   password: "",
+    // });
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
@@ -269,7 +269,7 @@ const Auth = () => {
           </Form>
         ) : (
           <Form {...registerForm}>
-            <form onSubmit={(d) => console.log(d)} className="space-y-6">
+            <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-6">
               <FormField
                 control={registerForm.control}
                 name="email"
