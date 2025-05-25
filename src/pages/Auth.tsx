@@ -57,7 +57,12 @@ const Auth = () => {
 
   // Register form
   const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+    // resolver: zodResolver(registerSchema),
+    resolver: async (data, context, options) => {
+      console.log("formdata", data)
+      console.log("validation result", await zodResolver(registerSchema)(data, context, options))
+      return zodResolver(registerSchema)(data, context, options)
+    },
     defaultValues: {
       email: "",
       password: "",
