@@ -285,6 +285,7 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          {registerForm.register("email")}
                           placeholder="Email"
                           type="email"
                           disabled={isLoading}
@@ -308,6 +309,7 @@ const Auth = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          {registerForm.register("password")}
                           placeholder="Password"
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
