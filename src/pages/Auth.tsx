@@ -138,13 +138,13 @@ const Auth = () => {
       setIsLoading(true);
       setAuthError(null);
 
-      const location = useLocation
-      console.log(location)
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get("redirect") || "/";
       
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: location.href,
+          redirectTo: location.origin + redirect,
         },
       });
 
