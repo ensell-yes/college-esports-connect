@@ -140,7 +140,7 @@ const Auth = () => {
     try {
       setIsLoading(true);
       setAuthError(null);
-
+      debugger;
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
