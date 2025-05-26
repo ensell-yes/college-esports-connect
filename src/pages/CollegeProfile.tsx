@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import CollegeLayout from "@/components/college/CollegeLayout";
 import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
@@ -13,16 +13,15 @@ import IntegratedCommPanel from "@/components/dashboard/communications/Integrate
 import { CollegeData } from "@/components/college/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
 import { PageTypeProfile } from "@/components/college/types";
 
 const CollegeProfile = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isCollegeProfile = location.pathname === "/college-profile-graceland";
   const isProgramDashboard = location.pathname === "/program-dashboard";
   const isMobile = useIsMobile();
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  const { user, hasDemoAccess, redirectAfterAuth } = useAuth();
   
   // Mock college data for the profile
   const [collegeData, setCollegeData] = useState<CollegeData>({
@@ -53,13 +52,19 @@ const CollegeProfile = () => {
     setCollegeData(prev => ({ ...prev, ...updatedData }));
   };
 
-  // Scroll to top on route change
+  // Check authentication for program dashboard
   useEffect(() => {
-    if (isProgramDashboard && !user && !localStorage.getItem("demo-access-token")) {
-      navigate("/auth");
+    if (isProgramDashboard && !user && !hasDemoAccess()) {
+      redirectAfterAuth(location.pathname);
+      navigate(`/auth?redirect=${encodeURIComponent(location.pathname)}`);
     }
     window.scrollTo(0, 0);
-  }, [user, navigate, location]);
+  }, [isProgramDashboard, user, hasDemoAccess, navigate, location.pathname, redirectAfterAuth]);
+
+  // Show loading for program dashboard if not authenticated
+  if (isProgramDashboard && !user && !hasDemoAccess()) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

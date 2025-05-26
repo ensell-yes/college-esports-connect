@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +8,7 @@ import { Eye, EyeOff, Mail, Lock, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/sonner";
 import { loginSchema, registerSchema } from "@/components/auth/schema";
+import { useAuth } from "@/hooks/useAuth";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,6 +32,26 @@ const Auth = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, getRedirectPath, clearRedirectPath } = useAuth();
+
+  // Check if user is already logged in and redirect
+  useEffect(() => {
+    if (user) {
+      const redirectPath = getRedirectPath();
+      clearRedirectPath();
+      navigate(redirectPath || "/");
+    }
+  }, [user, navigate, getRedirectPath, clearRedirectPath]);
+
+  // Store redirect path from URL params when component mounts
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const redirect = searchParams.get('redirect');
+    if (redirect) {
+      localStorage.setItem('auth-redirect-path', redirect);
+    }
+  }, [location.search]);
 
   const authForm = useForm<any>({
     resolver: async (data, context, options) => {
@@ -46,7 +68,6 @@ const Auth = () => {
 
   // Register form
   const registerForm = useForm<RegisterFormValues>({
-    // resolver: zodResolver(registerSchema),
     resolver: async (data, context, options) => {
       console.log("formdata", data)
       console.log("validation result", await zodResolver(registerSchema)(data, context, options))
@@ -97,7 +118,11 @@ const Auth = () => {
       }
 
       toast.success("Successfully signed in!");
-      navigate("/");
+      
+      // Redirect to stored path or home
+      const redirectPath = getRedirectPath();
+      clearRedirectPath();
+      navigate(redirectPath || "/");
     } catch (error: any) {
       setAuthError(error.message || "An error occurred during sign in");
     } finally {
@@ -138,11 +163,9 @@ const Auth = () => {
       setIsLoading(true);
       setAuthError(null);
 
-      const params = new URLSearchParams(window.location.search);
-      const redirect = params.get("redirect") || "/";
+      const redirectPath = getRedirectPath() || "/";
       const baseUrl = window.location.origin;
-
-      const redirectTo = `${baseUrl}/auth/callback?redirect=${encodeURIComponent(redirect)}`;
+      const redirectTo = `${baseUrl}/auth/callback?redirect=${encodeURIComponent(redirectPath)}`;
       
       const { error } = await supabase.auth.signInWithOAuth({
         provider,

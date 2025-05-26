@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import ProfilePanel from "@/components/dashboard/ProfilePanel";
 import StatsPanel from "@/components/dashboard/StatsPanel";
@@ -13,15 +13,22 @@ import IntegratedCommPanel from "@/components/dashboard/communications/Integrate
 import Navbar from "@/components/Navbar";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, hasDemoAccess, redirectAfterAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Redirect to auth if not logged in
+  // Redirect to auth if not logged in and no demo access
   useEffect(() => {
-    if (!user && !localStorage.getItem("demo-access-token")) {
-      navigate("/auth");
+    if (!user && !hasDemoAccess()) {
+      redirectAfterAuth(location.pathname);
+      navigate(`/auth?redirect=${encodeURIComponent(location.pathname)}`);
     }
-  }, [user, navigate]);
+  }, [user, hasDemoAccess, navigate, location.pathname, redirectAfterAuth]);
+
+  // Show loading or redirect if not authenticated
+  if (!user && !hasDemoAccess()) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

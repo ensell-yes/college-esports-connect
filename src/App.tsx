@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./hooks/useAuth";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import AuthCallback from "./pages/AuthCallback";
 import Demo from "./pages/Demo";
 import Dashboard from "./pages/Dashboard";
 import CollegeProfile from "./pages/CollegeProfile";
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/demo" element={<Demo />} />
             <Route path="/player-dashboard" element={<Dashboard />} />
             <Route path="/college-profile-graceland" element={<CollegeProfile />} />
