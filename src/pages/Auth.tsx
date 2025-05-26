@@ -90,10 +90,7 @@ const Auth = () => {
 
       const { error } = await supabase.auth.signInWithPassword({
         email: values.email,
-        password: values.password,
-        options: {
-          emailRedirectTo: window.location.href
-        }
+        password: values.password
       });
 
       if (error) {
