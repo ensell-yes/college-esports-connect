@@ -21,3 +21,5 @@ export interface CollegeData {
   website: string;
   esportsWebsite: string;
 }
+
+export const PageTypeProfile = "profile"

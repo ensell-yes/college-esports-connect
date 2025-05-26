@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import RecruitingForm from "./RecruitingForm";
 import { Link } from "react-router-dom";
+import { PageTypeProfile } from "../types";
 
 interface CoverImageSectionProps {
   coverImage: string;
@@ -38,10 +39,10 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
   const showEditButton = hasDemoAccess();
 
   const navButton = (pageType: string) => {
-    if (pageType == "profile") {
+    if (pageType == PageTypeProfile) {
       return (
         <Link to="/program-dashboard">
-          <Button 
+          <Button
             size="sm"
             className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
           >
@@ -52,7 +53,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
     } else {
       return (
         <Link to="/college-profile-graceland">
-          <Button 
+          <Button
             size="sm"
             className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
           >
@@ -88,27 +89,31 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
 
       {/* New action buttons */}
       <div className="absolute bottom-4 right-4 flex space-x-2">
-        <Button 
-          size="sm"
-          variant={isFollowing ? "default" : "outline"}
-          onClick={handleFollow}
-          className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
-        >
-          <UserPlus size={16} className="mr-1" />
-          {isFollowing ? "Following" : "Follow"}
-        </Button>
+        { pageType === PageTypeProfile && (
+          <Button
+            size="sm"
+            variant={isFollowing ? "default" : "outline"}
+            onClick={handleFollow}
+            className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+          >
+            <UserPlus size={16} className="mr-1" />
+            {isFollowing ? "Following" : "Follow"}
+          </Button>
+        )}
         
         <Sheet>
-          <SheetTrigger asChild>
-            <Button 
-              size="sm"
-              variant="outline"
-              className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
-            >
-              <Info size={16} className="mr-1" />
-              Recruiting Information
-            </Button>
-          </SheetTrigger>
+          { pageType === PageTypeProfile && (
+            <SheetTrigger asChild>
+              <Button
+                size="sm"
+                variant="outline"
+                className="bg-white/90 text-gray-800 hover:bg-white border-gray-300"
+              >
+                <Info size={16} className="mr-1" />
+                Recruiting Information
+              </Button>
+            </SheetTrigger>
+          )}
           <SheetContent className="overflow-y-auto" side="right">
             <SheetHeader>
               <SheetTitle>Esports Recruiting Information</SheetTitle>

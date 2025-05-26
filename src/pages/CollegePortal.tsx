@@ -5,6 +5,7 @@ import CollegeProfilePanel from "@/components/college/CollegeProfilePanel";
 import CollegeOverviewPanel from "@/components/college/CollegeOverviewPanel";
 import TopRecruitsPanel from "@/components/college/TopRecruitsPanel";
 import { CollegeData } from "@/components/college/types";
+import { PageTypeProfile } from "@/components/college/types";
 
 const CollegePortal = () => {
   // Initial college data
@@ -48,7 +49,7 @@ const CollegePortal = () => {
             className="col-span-2" 
             college={collegeData} 
             onUpdate={handleUpdateCollege} 
-            pageType="profile"
+            pageType={PageTypeProfile}
           />
           
           {/* Overview Panel (spans across both columns) */}

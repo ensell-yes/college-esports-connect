@@ -12,12 +12,17 @@ import SchedulePanel from "@/components/college/schedule/SchedulePanel";
 import IntegratedCommPanel from "@/components/dashboard/communications/IntegratedCommPanel";
 import { CollegeData } from "@/components/college/types";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { PageTypeProfile } from "@/components/college/types";
 
 const CollegeProfile = () => {
   const location = useLocation();
   const isCollegeProfile = location.pathname === "/college-profile-graceland";
   const isProgramDashboard = location.pathname === "/program-dashboard";
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   
   // Mock college data for the profile
   const [collegeData, setCollegeData] = useState<CollegeData>({
@@ -50,8 +55,11 @@ const CollegeProfile = () => {
 
   // Scroll to top on route change
   useEffect(() => {
+    if (isProgramDashboard && !user && !localStorage.getItem("demo-access-token")) {
+      navigate("/auth");
+    }
     window.scrollTo(0, 0);
-  }, [location]);
+  }, [user, navigate, location]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -64,7 +72,7 @@ const CollegeProfile = () => {
         {isCollegeProfile ? (
           // College Profile Layout
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} pageType="profile" className="col-span-1 md:col-span-2" />
+            <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} pageType={PageTypeProfile} className="col-span-1 md:col-span-2" />
             <SchedulePanel className="col-span-1" initialGameType="Valorant" />
             <CollegeOverviewPanel college={collegeData} onUpdate={handleUpdate} />
           </div>
