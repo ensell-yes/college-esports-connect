@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -140,11 +140,14 @@ const Auth = () => {
 
       const params = new URLSearchParams(window.location.search);
       const redirect = params.get("redirect") || "/";
+      const baseUrl = window.location.origin;
+
+      const redirectTo = `${baseUrl}/auth/callback?redirect=${encodeURIComponent(redirect)}`;
       
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: location.origin + redirect,
+          redirectTo: redirectTo,
         },
       });
 
