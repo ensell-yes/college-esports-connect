@@ -122,7 +122,7 @@ const CoverImageSection: FC<CoverImageSectionProps> = ({ coverImage, collegeName
           </SheetContent>
         </Sheet>
 
-        {showEditButton && navButton(pageType)}
+        {navButton(pageType)}
       </div>
     </div>
   );
