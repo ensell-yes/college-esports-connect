@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -82,8 +82,6 @@ const Auth = () => {
 
   // Handle login with Supabase
   const handleLogin = async (values: LoginFormValues) => {
-    console.log("Handling login form")
-    
     try {
       setIsLoading(true);
       setAuthError(null);
@@ -109,7 +107,6 @@ const Auth = () => {
 
   // Handle registration with Supabase
   const handleRegister = async (values: RegisterFormValues) => {
-    console.log("Handling register form")
     try {
       setIsLoading(true);
       setAuthError(null);
@@ -140,11 +137,14 @@ const Auth = () => {
     try {
       setIsLoading(true);
       setAuthError(null);
-      debugger;
+
+      const location = useLocation
+      console.log(location)
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: window.location.href,
+          redirectTo: location.href,
         },
       });
 
