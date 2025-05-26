@@ -14,6 +14,7 @@ import { CollegeData } from "@/components/college/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { PageTypeProfile } from "@/components/college/types";
 
 const CollegeProfile = () => {
   const location = useLocation();
@@ -71,7 +72,7 @@ const CollegeProfile = () => {
         {isCollegeProfile ? (
           // College Profile Layout
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} pageType="profile" className="col-span-1 md:col-span-2" />
+            <CollegeProfilePanel college={collegeData} onUpdate={handleUpdate} pageType={PageTypeProfile} className="col-span-1 md:col-span-2" />
             <SchedulePanel className="col-span-1" initialGameType="Valorant" />
             <CollegeOverviewPanel college={collegeData} onUpdate={handleUpdate} />
           </div>
