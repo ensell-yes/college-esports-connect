@@ -91,6 +91,9 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
+        options: {
+          emailRedirectTo: window.location.href
+        }
       });
 
       if (error) {
@@ -118,7 +121,7 @@ const Auth = () => {
         email: values.email,
         password: values.password,
         options: {
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: window.location.href,
         },
       });
 
@@ -144,7 +147,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: window.location.href,
         },
       });
 
